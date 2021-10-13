@@ -11,35 +11,45 @@
 <body>
     <header class="main-header">
         <input type="checkbox" id="menu">
-        <div class="main-header__header-container"> <!--Agregado: contiene nav-bar y search-bar-->
-            <nav class="nav-bar">
-                <div class="nav-bar__logo-container"> <!-- Agregado del logo -->
-                    <img src="img/logo/logo2.png" alt="Logo">
-                    <p>Líder mundial en electrónica</p>
-                </div>
-                <ul class="nav-bar__nav-list">
-                    <li class="nav-bar__nav-item">
-                        <a class="nav-bar__nav-link" target="_blank" href="index.html">Inicio</a>
-                    </li>
-                    <li class="nav-bar__nav-item">
-                        <a class="nav-bar__nav-link" target="_blank" href="alta.html">Alta</a>
-                    </li>
-                    <li class="nav-bar__nav-item">
-                        <a class="nav-bar__nav-link" target="_blank" href="contacto.html">Contacto</a>
-                    </li>
-                    <li class="nav-bar__nav-item">
-                        <a class="nav-bar__nav-link" target="_blank" href="nosotros.html">Nosotros</a>
-                    </li>
-                </ul>
-                <!--SEARCH-BAR NUEVO (parte 1) Generación del ícono-------->
-                <div id="ctn-icon-search">
-                    <i class="fas fa-search" id="icon-search"></i>
-                </div>
-                <!--------------------------------------------------------->
+        <nav class="nav-bar">
+            <div class="nav-bar__form-container1">
+                <input 
+                    class="nav-bar__form-search1" id="busqueda1" type="search"
+                    placeholder="Qué producto desea buscar?..."
+                >
+            </div>
+            <ul class="nav-bar__nav-list">
+                <li class="nav-bar__nav-item">
+                    <a class="nav-bar__nav-link" target="_blank" href="index.html">Inicio</a>
+                </li>
+                <li class="nav-bar__nav-item">
+                    <a class="nav-bar__nav-link" target="_blank" href="alta.html">Alta</a>
+                </li>
+                <li class="nav-bar__nav-item">
+                    <a class="nav-bar__nav-link" target="_blank" href="contacto.html">Contacto</a>
+                </li>
+                <li class="nav-bar__nav-item">
+                    <a class="nav-bar__nav-link" target="_blank" href="nosotros.html">Nosotros</a>
+                </li>
+            </ul>
+        </nav>
+        <div class="search-bar">
+            <div class="search-bar__logo-container">
+                <img src="img/logo/logo2.png" alt="Logo">
+                <p>Líder mundial en electrónica</p>
+            </div>
+            <form class="search-bar__form-container">
+                <input 
+                class="search-bar__form-search" id="busqueda" type="search"
+                placeholder="Indique aquí el nombre del producto que desea buscar.."
+                >
+                <button class="search-bar__form-submit" type="button">
+                    <img src="img/items/lupa.png" alt="lupa">
+                </button>
                 <div class="search-bar__carrito-container">
                     <img src="img/items/carrito01.png" alt="carrito">
                 </div>
-            </nav>
+            </form>
             <div class="menu-toggle">
                 <label class="menu-toggle__label" for="menu">
                     <span class="menu-toggle__pan-arriba"></span>
@@ -47,37 +57,8 @@
                     <span class="menu-toggle__pan-abajo"></span>
                 </label>
             </div>
-            <!--Search bar viejo------------------------------------------>
-            <!-- <div class="search-bar__logo-container">Logo</div> Se saca este contenedor del logo ya que se decidió incorporarlo con la class container header--> 
-                <!-- <form class="search-bar__form-container">
-                    <label class="search-bar__form-label" for="busqueda"></label>
-                    <input class="search-bar__form-search" id="busqueda" type="search" placeholder="Buscá productos, categorías, marcas...">
-                    <input class="search-bar__form-submit" type="submit" value="">
-                </form> -->
-                <!-- bar de categorías de prod -->
-                <!-- <div class="categorias">
-                    <form action=""></form>
-                </div> ------------------------------------------------------->
         </div>
     </header>
-        <!-- SEARCH-BAR NUEVO (parte 2) INICIO----------------------------------------->
-        <div id="ctn-bars-search">
-            <input  type="text" 
-            id="inputSearch" 
-            placeholder="Buscá productos, categorías, marcas..."
-            >
-        </div>
-        <ul id="box-search"> <!-- Listado que aparece en el desplegable -->
-            <li><a href="#"><i class="fas fa-search"></i>PlayStation 5</a></li>
-            <li><a href="#"><i class="fas fa-search"></i>JBL GO</a></li>
-            <li><a href="#"><i class="fas fa-search"></i>Auriculares Bob Marley</a></li>
-            <li><a href="#"><i class="fas fa-search"></i>TV Sony 4K</a></li>
-            <li><a href="#"><i class="fas fa-search"></i>Notebook Lenovo</a></li>
-        </ul>
-        <div 
-            id="cover-ctn-search">
-        </div> <!-- Sombra generada en el html al usar el buscador-->
-        <!-- FIN SEARCH-BAR NUEVO (parte 2) ESTO ESTÁ POR FUERA DEL HEADER Y MAIN---->
     
     <main class="nosotros">
         <div class="img-fondo"></div>
@@ -142,17 +123,11 @@
     </main>
 
     <footer class="nosotros">
-        <div class="container__footer">
-            <div class="box__footer">
-                <div class="terms">
-                    <img src="img/logo/logo2.png" alt="Logo">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Harum amet repudiandae cumque quod? Eius consequuntur earum,
-                        optio dolores iure eum!
-                    </p>
-                </div>
+        <div class="container-footer">
+            <div class="container-footer__box-footer">
+                <img src="img/logo/logo2.png" alt="Logo">
             </div>
-            <div class="box__footer">
+            <div class="container-footer__box-footer">
                 <h2>Connecticus</h2>
                 <ul>
                     <li>
@@ -169,7 +144,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="box__footer">
+            <div class="container-footer__box-footer">
                 <h2>Servicios</h2>
                 <ul>
                     <li>
@@ -180,7 +155,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="box__footer">
+            <div class="container-footer__box-footer">
                 <h2>Ayuda</h2>
                 <ul>
                     <li>
@@ -194,7 +169,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="box__footer">
+            <div class="container-footer__box-footer">
                 <h2>Redes Sociales</h2>
                 <ul>
                     <li>
@@ -211,12 +186,12 @@
                     </li>
                 </ul>
             </div>
-            <div class="box-copyright">
-                <hr>
-                <p>Todos los derechos reservados &copy; 2021
-                    <b>Connecticus</b>
-                </p>
-            </div>
+        </div>
+        <div class="box-copyright">
+            <p>
+                Todos los derechos reservados &copy; 2021
+                <b>Connecticus</b>
+            </p>
         </div>
     </footer>
     <script src="js/script.js"></script>
