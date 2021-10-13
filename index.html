@@ -5,41 +5,51 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio</title>
+    <script src="https://kit.fontawesome.com/41bcea2ae3.js"></script>
     <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
     <header class="main-header">
-
         <input type="checkbox" id="menu">
-
         <nav class="nav-bar">
+            <div class="nav-bar__form-container1">
+                <input 
+                    class="nav-bar__form-search1" id="busqueda1" type="search"
+                    placeholder="Qué producto desea buscar?..."
+                >
+            </div>
             <ul class="nav-bar__nav-list">
                 <li class="nav-bar__nav-item">
-                    <a class="nav-bar__nav-link" href="index.html">Inicio</a>
+                    <a class="nav-bar__nav-link" target="_blank" href="index.html">Inicio</a>
                 </li>
                 <li class="nav-bar__nav-item">
-                    <a class="nav-bar__nav-link" href="alta.html">Alta</a>
+                    <a class="nav-bar__nav-link" target="_blank" href="alta.html">Alta</a>
                 </li>
                 <li class="nav-bar__nav-item">
-                    <a class="nav-bar__nav-link" href="contacto.html">Contacto</a>
+                    <a class="nav-bar__nav-link" target="_blank" href="contacto.html">Contacto</a>
                 </li>
                 <li class="nav-bar__nav-item">
-                    <a class="nav-bar__nav-link" href="nosotros.html">Nosotros</a>
+                    <a class="nav-bar__nav-link" target="_blank" href="nosotros.html">Nosotros</a>
                 </li>
             </ul>
         </nav>
         <div class="search-bar">
             <div class="search-bar__logo-container">
-                Logo
+                <img src="img/logo/logo2.png" alt="Logo">
+                <p>Líder mundial en electrónica</p>
             </div>
             <form class="search-bar__form-container">
-                <label class="search-bar__form-label" for="busqueda">Buscar</label>
-                <input class="search-bar__form-search" id="busqueda" type="search">
-                <input class="search-bar__form-submit" type="submit" value="Buscar">
+                <input 
+                class="search-bar__form-search" id="busqueda" type="search"
+                placeholder="Indique aquí el nombre del producto que desea buscar.."
+                >
+                <button class="search-bar__form-submit" type="button">
+                    <img src="img/items/lupa.png" alt="lupa">
+                </button>
+                <div class="search-bar__carrito-container">
+                    <img src="img/items/carrito01.png" alt="carrito">
+                </div>
             </form>
-            <div class="search-bar__carrito-container">
-                C
-            </div>
             <div class="menu-toggle">
                 <label class="menu-toggle__label" for="menu">
                     <span class="menu-toggle__pan-arriba"></span>
@@ -49,24 +59,24 @@
             </div>
         </div>
     </header>
+
     <main>
         <section class="section-cards">
-
             <header class="section-cards__header">
-                <h1>Lorem ipsum, dolor sit amet consectetur adipisicing.</h1>
+                <h1>Connecticus siempre te ofrece el mejor precio y calidad.</h1> <!--Solo se cambió el lorem por un h1 nuevo-->
+                <video controls autoplay muted loop>
+                    <source src="img/Video.mp4" type="video/mp4">
+                </video>
                 <p>Se encontraron X productos</p>
             </header>
-
             <div class="cards-container">
-                
                 <a class="card" href="#">
                     <article class="card__article">
                         <div
                             class="card__image"
                             style="background-image: url('img/productos/notebook-lenovo.jpg')"
-                        >
+                            >
                         </div>
-                        
                         <div class="card__content">
                             <h3 class="card__heading">Título</h3>
                             <div class="card__description">
@@ -75,15 +85,13 @@
                         </div>
                     </article>
                 </a>
-
                 <a class="card" href="#">
                     <article class="card__article">
                         <div
                             class="card__image"
                             style="background-image: url('img/productos/apple-iphone-11-pro-max.jpg')"
-                        >
+                            >
                         </div>
-                        
                         <div class="card__content">
                             <h3 class="card__heading">Título</h3>
                             <div class="card__description">
@@ -92,15 +100,13 @@
                         </div>
                     </article>
                 </a>
-
                 <a class="card" href="#">
                     <article class="card__article">
                         <div
                             class="card__image"
                             style="background-image: url('img/productos/camara-canon.jpg')"
-                        >
+                            >
                         </div>
-                        
                         <div class="card__content">
                             <h3 class="card__heading">Título</h3>
                             <div class="card__description">
@@ -109,15 +115,13 @@
                         </div>
                     </article>
                 </a>
-
                 <a class="card" href="#">
                     <article class="card__article">
                         <div
                             class="card__image"
                             style="background-image: url('img/productos/auriculares-sony.jpg')"
-                        >
+                            >
                         </div>
-                        
                         <div class="card__content">
                             <h3 class="card__heading">Título</h3>
                             <div class="card__description">
@@ -126,15 +130,13 @@
                         </div>
                     </article>
                 </a>
-
                 <a class="card" href="#">
                     <article class="card__article">
                         <div
                             class="card__image"
                             style="background-image: url('img/productos/parlante-jbl.jpg')"
-                        >
+                            >
                         </div>
-                        
                         <div class="card__content">
                             <h3 class="card__heading">Título</h3>
                             <div class="card__description">
@@ -143,15 +145,13 @@
                         </div>
                     </article>
                 </a>
-
                 <a class="card" href="#">
                     <article class="card__article">
                         <div
                             class="card__image"
                             style="background-image: url('img/productos/google-nest-mini.jpg')"
-                        >
+                            >
                         </div>
-                        
                         <div class="card__content">
                             <h3 class="card__heading">Título</h3>
                             <div class="card__description">
@@ -160,15 +160,13 @@
                         </div>
                     </article>
                 </a>
-
                 <a class="card" href="#">
                     <article class="card__article">
                         <div
                             class="card__image"
                             style="background-image: url('img/productos/samsung-galaxy-s21-plus-5g.jpg')"
-                        >
+                            >
                         </div>
-                        
                         <div class="card__content">
                             <h3 class="card__heading">Título</h3>
                             <div class="card__description">
@@ -177,15 +175,13 @@
                         </div>
                     </article>
                 </a>
-
                 <a class="card" href="#">
                     <article class="card__article">
                         <div
                             class="card__image"
                             style="background-image: url('img/productos/drone-dji.jpg')"
-                        >
+                            >
                         </div>
-                        
                         <div class="card__content">
                             <h3 class="card__heading">Título</h3>
                             <div class="card__description">
@@ -194,15 +190,13 @@
                         </div>
                     </article>
                 </a>
-
                 <a class="card" href="#">
                     <article class="card__article">
                         <div
                             class="card__image"
                             style="background-image: url('img/productos/notebook-lenovo.jpg')"
-                        >
+                            >
                         </div>
-                        
                         <div class="card__content">
                             <h3 class="card__heading">Título</h3>
                             <div class="card__description">
@@ -211,15 +205,13 @@
                         </div>
                     </article>
                 </a>
-
                 <a class="card" href="#">
                     <article class="card__article">
                         <div
                             class="card__image"
                             style="background-image: url('img/productos/dji-mavic-2-pro.jpg')"
-                        >
+                            >
                         </div>
-                        
                         <div class="card__content">
                             <h3 class="card__heading">Título</h3>
                             <div class="card__description">
@@ -228,15 +220,13 @@
                         </div>
                     </article>
                 </a>
-
                 <a class="card" href="#">
                     <article class="card__article">
                         <div
                             class="card__image"
                             style="background-image: url('img/productos/camara-canon.jpg')"
-                        >
+                            >
                         </div>
-                        
                         <div class="card__content">
                             <h3 class="card__heading">Título</h3>
                             <div class="card__description">
@@ -245,15 +235,13 @@
                         </div>
                     </article>
                 </a>
-
                 <a class="card" href="#">
                     <article class="card__article">
                         <div
                             class="card__image"
                             style="background-image: url('img/productos/chromecast-google.jpg')"
-                        >
+                            >
                         </div>
-                        
                         <div class="card__content">
                             <h3 class="card__heading">Título</h3>
                             <div class="card__description">
@@ -262,15 +250,13 @@
                         </div>
                     </article>
                 </a>
-
                 <a class="card" href="#">
                     <article class="card__article">
                         <div
                             class="card__image"
                             style="background-image: url('img/productos/parlante-jbl.jpg')"
-                        >
+                            >
                         </div>
-                        
                         <div class="card__content">
                             <h3 class="card__heading">Título</h3>
                             <div class="card__description">
@@ -279,15 +265,13 @@
                         </div>
                     </article>
                 </a>
-
                 <a class="card" href="#">
                     <article class="card__article">
                         <div
                             class="card__image"
                             style="background-image: url('img/productos/google-nest-mini.jpg')"
-                        >
+                            >
                         </div>
-                        
                         <div class="card__content">
                             <h3 class="card__heading">Título</h3>
                             <div class="card__description">
@@ -296,15 +280,13 @@
                         </div>
                     </article>
                 </a>
-
                 <a class="card" href="#">
                     <article class="card__article">
                         <div
                             class="card__image"
                             style="background-image: url('img/productos/televisor-lg.jpg')"
-                        >
+                            >
                         </div>
-                        
                         <div class="card__content">
                             <h3 class="card__heading">Título</h3>
                             <div class="card__description">
@@ -313,15 +295,13 @@
                         </div>
                     </article>
                 </a>
-
                 <a class="card" href="#">
                     <article class="card__article">
                         <div
                             class="card__image"
                             style="background-image: url('img/productos/drone-dji.jpg')"
-                        >
+                            >
                         </div>
-                        
                         <div class="card__content">
                             <h3 class="card__heading">Título</h3>
                             <div class="card__description">
@@ -330,10 +310,82 @@
                         </div>
                     </article>
                 </a>
-
             </div>
         </section>
     </main>
-    <footer></footer>
+    
+    <footer>
+        <div class="container-footer">
+            <div class="container-footer__box-footer">
+                <img src="img/logo/logo2.png" alt="Logo">
+            </div>
+            <div class="container-footer__box-footer">
+                <h2>Connecticus</h2>
+                <ul>
+                    <li>
+                        <a href="#">Acerca de</a>
+                    </li>
+                    <li>
+                        <a href="#">Términos y Condiciones</a>
+                    </li>
+                    <li>
+                        <a href="#">Promociones</a>
+                    </li>
+                    <li>
+                        <a href="#">Políticas de calidad</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="container-footer__box-footer">
+                <h2>Servicios</h2>
+                <ul>
+                    <li>
+                        <a href="#">Crédito Connecticus</a>
+                    </li>
+                    <li>
+                        <a href="#">Ventas Corporativas</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="container-footer__box-footer">
+                <h2>Ayuda</h2>
+                <ul>
+                    <li>
+                        <a href="#">Sucursales</a>
+                    </li>
+                    <li>
+                        <a href="#">Preguntas Frecuentes</a>
+                    </li>
+                    <li>
+                        <a href="#">Planes Ahora</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="container-footer__box-footer">
+                <h2>Redes Sociales</h2>
+                <ul>
+                    <li>
+                        <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fab fa-facebook"></i> Facebook</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fab fa-linkedin-in"></i> LikedIn</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="box-copyright">
+            <p>
+                Todos los derechos reservados &copy; 2021
+                <b>Connecticus</b>
+            </p>
+        </div>
+    </footer>
+    <!-- <script src="js/script.js"></script> -->
 </body>
 </html>

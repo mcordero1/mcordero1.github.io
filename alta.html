@@ -5,9 +5,227 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alta</title>
-    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="https://kit.fontawesome.com/41bcea2ae3.js"></script>
 </head>
 <body>
-    <h1>Alta</h1>
+    <header class="main-header">
+        <input type="checkbox" id="menu">
+        <nav class="nav-bar">
+            <div class="nav-bar__form-container1">
+                <input 
+                    class="nav-bar__form-search1" id="busqueda1" type="search"
+                    placeholder="Qué producto desea buscar?..."
+                >
+            </div>
+            <ul class="nav-bar__nav-list">
+                <li class="nav-bar__nav-item">
+                    <a class="nav-bar__nav-link" target="_blank" href="index.html">Inicio</a>
+                </li>
+                <li class="nav-bar__nav-item">
+                    <a class="nav-bar__nav-link" target="_blank" href="alta.html">Alta</a>
+                </li>
+                <li class="nav-bar__nav-item">
+                    <a class="nav-bar__nav-link" target="_blank" href="contacto.html">Contacto</a>
+                </li>
+                <li class="nav-bar__nav-item">
+                    <a class="nav-bar__nav-link" target="_blank" href="nosotros.html">Nosotros</a>
+                </li>
+            </ul>
+        </nav>
+        <div class="search-bar">
+            <div class="search-bar__logo-container">
+                <img src="img/logo/logo2.png" alt="Logo">
+                <p>Líder mundial en electrónica</p>
+            </div>
+            <form class="search-bar__form-container">
+                <input 
+                class="search-bar__form-search" id="busqueda" type="search"
+                placeholder="Indique aquí el nombre del producto que desea buscar.."
+                >
+                <button class="search-bar__form-submit" type="button">
+                    <img src="img/items/lupa.png" alt="lupa">
+                </button>
+                <div class="search-bar__carrito-container">
+                    <img src="img/items/carrito01.png" alt="carrito">
+                </div>
+            </form>
+            <div class="menu-toggle">
+                <label class="menu-toggle__label" for="menu">
+                    <span class="menu-toggle__pan-arriba"></span>
+                    <span class="menu-toggle__medallon"></span>
+                    <span class="menu-toggle__pan-abajo"></span>
+                </label>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="form-container">
+            <h1>Alta de Producto</h1>
+            <form class="form-container__form" action="alta.html" method="POST" enctype="multipart/form-data">
+                <div class="form-container__form-option">
+                    <label for="name">Nombre</label>
+                    <input  
+                        type="text" id="name" name="name"
+                        placeholder="Escriba aquí el nombre del producto.."
+                        maxlength="30" required
+                    >
+                <div class="form-container__form-option">
+                    <label for="marca">Marca</label>
+                    <select name="marca" id="marca" required>
+                        <option>Selecciona una marca..</option>
+                        <option value="1">Apple</option>
+                        <option value="2">Sony</option>
+                        <option value="3">Cannon</option>
+                        <option value="4">Samsung</option>
+                        <option value="5">Google</option>
+                        <option value="6">DJI</option>
+                        <option value="7">DH</option>
+                        <option value="8">Motorola</option>
+                        <option value="9">Lenovo</option>
+                        <option value="10">JBL</option>
+                        <option value="11">LG</option>
+                    </select>
+                </div>
+                <div class="form-container__form-option">
+                    <label for="categoria">Categoría</label>
+                    <select name="categoria" id="categoria" required>
+                        <option>Selecciona una categoría..</option>
+                        <optgroup label="Grandes Electrodomésticos">
+                            <option value="1">Lavarropas</option>
+                        </optgroup>
+                        <optgroup label="Electrónica">
+                            <option value="2">Chromecast</option>
+                            <option value="3">Drones</option>
+                            <option value="4">Modems</option>
+                            <option value="5">Consolas</option>
+                            <option value="6">Televisores</option>
+                            <option value="7">Notebook</option>
+                        </optgroup>
+                        <optgroup label="Telefonía">
+                            <option value="8">Celulares</option>
+                            <option value="9">Chips</option>
+                        </optgroup>
+                        <optgroup label="Sonido">
+                            <option value="10">Auriculares</option>
+                            <option value="11">Parlante</option>
+                        </optgroup>
+                    </select>
+                </div>
+                </div>
+                    <div class="form-container__form-option">
+                    <label for="price">Precio</label>
+                    <input
+                        type="number" id="price" name="price" required min="0"
+                        step="0.01" value="0"
+                    >
+                </div>
+                <div class="form-container__form-option">
+                    <label for="stock">Stock</label>
+                    <input
+                        type="number" id="stock" name="stock" required max="30"
+                        min="1" step="1" value="1"
+                    >
+                </div>
+                <div class="form-container__form-file">
+                    <label for="foto">Foto</label>
+                    <input type="file" id="foto" name="foto" required>
+                </div>
+                <fieldset class="form-container__form-details">
+                    <legend>Detalles</legend>
+                    <label for="date">Fecha y Hora</label>
+                    <input type="date" id="date" name="date" required>
+                    <textarea
+                        name="observation" id="observation" placeholder="Observaciones del producto..">
+                    </textarea>
+                </fieldset>
+                <fieldset class="form-container__form-distribution">
+                    <legend>Envío</legend>
+                    <input type="radio" id="con-cargo" name="con-cargo" checked>
+                    <label for="con-cargo">Con cargo</label>
+                    <input type="radio" id="sin-cargo" name="sin-cargo">
+                    <label for="sin-cargo">Sin cargo</label>
+                </fieldset>
+                <div class="form-container__buttons">
+                    <input type="submit" value="Dar de alta">
+                    <input type="reset" value="Restablecer formulario">
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container-footer">
+            <div class="container-footer__box-footer">
+                <img src="img/logo/logo2.png" alt="Logo">
+            </div>
+            <div class="container-footer__box-footer">
+                <h2>Connecticus</h2>
+                <ul>
+                    <li>
+                        <a href="#">Acerca de</a>
+                    </li>
+                    <li>
+                        <a href="#">Términos y Condiciones</a>
+                    </li>
+                    <li>
+                        <a href="#">Promociones</a>
+                    </li>
+                    <li>
+                        <a href="#">Políticas de calidad</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="container-footer__box-footer">
+                <h2>Servicios</h2>
+                <ul>
+                    <li>
+                        <a href="#">Crédito Connecticus</a>
+                    </li>
+                    <li>
+                        <a href="#">Ventas Corporativas</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="container-footer__box-footer">
+                <h2>Ayuda</h2>
+                <ul>
+                    <li>
+                        <a href="#">Sucursales</a>
+                    </li>
+                    <li>
+                        <a href="#">Preguntas Frecuentes</a>
+                    </li>
+                    <li>
+                        <a href="#">Planes Ahora</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="container-footer__box-footer">
+                <h2>Redes Sociales</h2>
+                <ul>
+                    <li>
+                        <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fab fa-facebook"></i> Facebook</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fab fa-linkedin-in"></i> LikedIn</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="box-copyright">
+            <p>
+                Todos los derechos reservados &copy; 2021
+                <b>Connecticus</b>
+            </p>
+        </div>
+    </footer>
 </body>
 </html>

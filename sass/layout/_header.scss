@@ -4,97 +4,138 @@
 .main-header {
     display: flex;
     flex-direction: column;
+    width: 100%;
+    position: fixed;
+    z-index: 1;
+    padding-top: 1em;
+    background-color: #f1f2f3;
 }
 
 #menu {
     display: none;
-}
-
-#menu:checked + .nav-bar {
-    display: block;
-}
-
-#menu:checked ~ .search-bar .menu-toggle__label {
-    background-color: yellow;
+    
+    &:checked + .nav-bar {
+        display: block;
+    }
 }
 
 /*********************************
             NAV BAR
 *********************************/
 .nav-bar {
-    background-color: mediumturquoise;
-}
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
 
-.nav-bar__nav-list {
+    &__form-container1 {
+        display: none;
+    }
+    
+    &__nav-list {
     display: flex;
     list-style-type: none;
+    width: 100%;
     justify-content: center;
-}
+    margin-left: 15em;
+    }
 
-.nav-bar__nav-item {
-    text-align: center;
-    background-color: pink;
-}
+    &__nav-item {
+        text-align: center;
+        
+    }
 
-.nav-bar__nav-link {
-    display: block;
-    background-color: purple;
-    color: #fff;
-    padding: 1em 2em;
-    text-decoration: none;
+    &__nav-link {
+        display: block;
+        padding: 1em 5em;
+        text-decoration: none;
+        font-weight: bold;
+        
+        &:hover {
+            border-radius: 50px;
+            background-color: #fff;
+            transition: all 500ms ease;
+            -webkit-transition: all 500ms ease;
+            -o-transition: all 500ms ease;
+            color: #ff0000;
+            font-weight: bold;
+        }
+    }
 }
-
 
 /*********************************
             SEARCH BAR
 *********************************/
 .search-bar {
-    background-color: olivedrab;
+    width: 75%;
+    margin: 0 auto;
     display: flex;
     justify-content: space-between;
-}
 
-.search-bar__logo-container,
-.search-bar__form-container {
-    padding: 1em;
-}
+    &__logo-container,
+    &__form-container {
+        padding: 1em;
+    }
+    
+    &__logo-container {
+        position: absolute;
+        z-index: 2;
+        bottom: 1em;
+        right: 75em;
+        display: flex;
+        align-items: center;
+    
+        & p {
+            max-width: 200px;
+            margin-left: 10px;
+            font-weight: bold;
+        }
+    }
+    
+    &__form-container {
+        flex-basis: 100%;
+        display: flex;
+        justify-content: flex-end;
 
-.search-bar__logo-container {
-    background-color: yellow;
-}
+    }
+    
+    &__form-search {
+        width: 62%;
+        height: 2.5em;
+        padding: 1em;
+        border-radius: 1em;
+        border: none;
+        outline: 0;
+    }
+    
+    &__form-submit {
+        width: 2.5%;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+    }
 
-.search-bar__form-container {
-    background-color: gold;
-    flex-basis: 100%;
-    display: flex;
-    justify-content: center;
-}
+    &__carrito-container {
+        display: flex;
+        height: 2em;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        margin-left: 5em;
 
-.search-bar__form-label {
-    background-color: greenyellow;
+        & img {
+            position: absolute;
+            bottom: 4em;
+        }
+    }
 }
-
-.search-bar__form-search {
-    background-color: black;
-    width: 70%;
-}
-
-.search-bar__form-submit {
-    background-color: darkslategray;
-}
-
-.search-bar__carrito-container {
-    flex: 0 0 3em;
-    background-color: goldenrod;
-}
-
 
 /*********************************
             MENU TOGGLE
 *********************************/
 .menu-toggle {
     display: none;
-    background-color: red;
     flex: 0 0 3em;
     position: relative;
     cursor: pointer;
@@ -102,7 +143,6 @@
 
 .menu-toggle__label {
     display: block;
-    background-color: black;
     width: 100%;
     height: 100%;
 }
@@ -111,7 +151,7 @@
 .menu-toggle__medallon,
 .menu-toggle__pan-abajo {
     display: block;
-    background-color: #333;
+    background-color: #888686;
     height: .2em;
     position: absolute;
     left: .5em;
@@ -130,22 +170,205 @@
     bottom: .8em;
 }
 
-@media (max-width: 768px) {
+/************************************************
+                MEDIA QUERY 
+*************************************************/
 
+@media (min-width: 1440px) and (max-width: 1800px) {
+    .search-bar__logo-container img {
+        position: absolute;
+        bottom: 1em;
+        right: 3em;
+    }
+
+    .search-bar__logo-container p {
+        display: none;
+    }
+
+    .search-bar__form-container {
+        margin-left: 2.5em;
+    }
+
+    .search-bar__form-search {
+        width: 50%;
+        
+    }
+
+    .nav-bar__nav-list {
+        margin-right: 5em;
+    }
+
+    .search-bar__carrito-container {
+        margin-right: 10em;
+    }
+}
+
+@media (min-width: 1024px) and (max-width: 1440px) {
+    .search-bar {
+        width: 100%;
+        margin: 0 auto;
+
+        &__logo-container img {
+            /*height: auto;
+            width: auto;
+            max-width: 200px;
+            max-height: 200px;*/
+            position: absolute;
+            bottom: 1.5em;
+            right: -10em;
+        }
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .nav-bar__nav-list {
+        width: 100%;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        margin-left: 5em;
+    }
+
+    .nav-bar__nav-link {
+        padding: 1em 3em;
+    }
+
+    .search-bar {
+        width: 100%;
+        padding-right: 5em;
+
+        &__form-search {
+            width: 100%;
+            max-width: 550px;
+        }
+        
+        &__logo-container img {
+            height: auto;
+            width: auto;
+            max-width: 200px;
+            max-height: 200px;
+            position: fixed;
+            top: 40px;
+            right: 775px;
+            margin-right: 1em;
+        }
+    }
+}
+
+@media (max-width: 768px) {
     .main-header {
         flex-direction: column-reverse;
+        background-image: url(../../img/logo/768.png);
+        background-repeat: no-repeat;
     }
 
     .menu-toggle {
         display: block;
+        left: 3em;
     }
 
-    .nav-bar {
+    .nav-bar,
+    .search-bar__form-submit {
+        display: none;
+
+        &__nav-list {
+            flex-direction: column;
+        }
+    }
+}
+
+@media (min-width: 425px) and (max-width: 768px) {
+    /*.main-header {
+        background-image: url(../../img/logo/768.png);
+        background-repeat: no-repeat;
+        background-position-x: 1em;
+    }*/
+
+    .nav-bar__nav-list {
+        padding-right: 8.15em;
+    }
+
+    .search-bar__carrito-container img {
+        top: 2em;
+        right: 8em;
+    }
+
+    .search-bar__form-search {
+        width: 65%;
+        margin-left: 5em;
+    }
+}
+
+@media (max-width: 425px) {
+    .search-bar__form-search {
         display: none;
     }
 
-    .nav-bar__nav-list {
-        flex-direction: column;
+    .menu-toggle {
+        left: -8em;
     }
 
+    .search-bar__carrito-container img {
+        position: absolute;
+        left: 23em;
+    }
+
+    .nav-bar__nav-list {
+        width: 150%;
+        position: absolute;
+        right: -11.3em;
+        background-color: #f1f2f3;
+    }
+
+    .nav-bar__form-container1 {
+        display: block;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .nav-bar__form-search1 {
+        width: 100%;
+        margin-top: 1em;
+        margin-left: 1em;
+        padding: 0.8em;
+        border: none;
+        border-radius: 1em;
+        outline: none;
+    }
+}
+
+@media (max-width: 375px) {
+    .menu-toggle {
+        left: -6.75em;
+    }
+
+    .search-bar__carrito-container img {
+        position: absolute;
+        left: 20.5em;
+        top: 2em;
+    }
+
+    .nav-bar__nav-list {
+        position: absolute;
+        right: -6.25em;
+    }
+}
+
+@media (max-width: 320px) {
+    .menu-toggle {
+        left: -5.5em;
+    }
+
+    .search-bar__carrito-container img {
+        position: absolute;
+        left: 17em;
+        top: 2em;
+    }
+
+    .nav-bar__nav-list {
+        position: absolute;
+        right: -5.5em;
+    }
 }

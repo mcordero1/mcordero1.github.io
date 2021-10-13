@@ -1,0 +1,102 @@
+.contact {
+    padding: 12.5em 4em 2em;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    color: #fff;
+
+    &__logo {
+        text-align: center;
+        font-size: 3em;
+        margin-bottom: 0.5em;
+    }
+
+    &__logo span {
+        color: #b70e21;
+    }
+}
+
+.contact-container {
+    box-shadow: 0 0 20px 0 rgba($color: #fdfdfd, $alpha: 0.3);
+    padding: 50px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    & > * {
+        padding: 1em;
+    }
+
+    &__form {
+        background-color: #222222;
+    }
+
+    &__form h2 {
+        margin-bottom: 1em;
+    }
+
+    &__form input,
+    &__form textarea,
+    &__form button {
+        width: 100%;
+        padding: 1em;
+        border: none;
+        background: none;
+        border-bottom: 1px solid #d63031;
+        outline: none;
+        margin-bottom: 2em;
+        color: #fff;
+    }
+
+    &__form textarea {
+        resize: vertical;
+        max-height: 200px;
+    }
+
+    &__form button {
+        background-color: #b70e21;
+        color: #000;
+        border: 0px;
+        font-weight: bold;
+        text-transform: uppercase;
+        padding: 1em;
+        margin-bottom: 0px;
+        border-radius: 5px;
+    }
+
+    &__form button:hover,
+    &__form button:focus {
+        color: #fff;
+        background-color: #d63031;
+        transition: background-color 500ms ease-out;
+    }
+
+    &__info {
+        background-color: #000;
+    }
+
+    &__info h3 {
+        text-align: center;
+        margin-bottom: 1em;
+        color: #b70e21;
+    }
+
+    &__info li {
+        margin-bottom: 1em;
+    }
+
+    &__info i {
+        padding-right: 1em;
+    }
+
+    &__info p:first-of-type {
+        margin-top: 2.5em;
+    }
+
+    &__info p:nth-of-type(2) {
+        margin-top: 4em;
+        font-style: italic;
+        font-weight: bold;
+        color: #b70e21;
+        text-align: right;
+    }
+}

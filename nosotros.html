@@ -5,9 +5,220 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nosotros</title>
-    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="https://kit.fontawesome.com/41bcea2ae3.js"></script>
 </head>
 <body>
-    <h1>Nosotros</h1>
+    <header class="main-header">
+        <input type="checkbox" id="menu">
+        <div class="main-header__header-container"> <!--Agregado: contiene nav-bar y search-bar-->
+            <nav class="nav-bar">
+                <div class="nav-bar__logo-container"> <!-- Agregado del logo -->
+                    <img src="img/logo/logo2.png" alt="Logo">
+                    <p>Líder mundial en electrónica</p>
+                </div>
+                <ul class="nav-bar__nav-list">
+                    <li class="nav-bar__nav-item">
+                        <a class="nav-bar__nav-link" target="_blank" href="index.html">Inicio</a>
+                    </li>
+                    <li class="nav-bar__nav-item">
+                        <a class="nav-bar__nav-link" target="_blank" href="alta.html">Alta</a>
+                    </li>
+                    <li class="nav-bar__nav-item">
+                        <a class="nav-bar__nav-link" target="_blank" href="contacto.html">Contacto</a>
+                    </li>
+                    <li class="nav-bar__nav-item">
+                        <a class="nav-bar__nav-link" target="_blank" href="nosotros.html">Nosotros</a>
+                    </li>
+                </ul>
+                <!--SEARCH-BAR NUEVO (parte 1) Generación del ícono-------->
+                <div id="ctn-icon-search">
+                    <i class="fas fa-search" id="icon-search"></i>
+                </div>
+                <!--------------------------------------------------------->
+                <div class="search-bar__carrito-container">
+                    <img src="img/items/carrito01.png" alt="carrito">
+                </div>
+            </nav>
+            <div class="menu-toggle">
+                <label class="menu-toggle__label" for="menu">
+                    <span class="menu-toggle__pan-arriba"></span>
+                    <span class="menu-toggle__medallon"></span>
+                    <span class="menu-toggle__pan-abajo"></span>
+                </label>
+            </div>
+            <!--Search bar viejo------------------------------------------>
+            <!-- <div class="search-bar__logo-container">Logo</div> Se saca este contenedor del logo ya que se decidió incorporarlo con la class container header--> 
+                <!-- <form class="search-bar__form-container">
+                    <label class="search-bar__form-label" for="busqueda"></label>
+                    <input class="search-bar__form-search" id="busqueda" type="search" placeholder="Buscá productos, categorías, marcas...">
+                    <input class="search-bar__form-submit" type="submit" value="">
+                </form> -->
+                <!-- bar de categorías de prod -->
+                <!-- <div class="categorias">
+                    <form action=""></form>
+                </div> ------------------------------------------------------->
+        </div>
+    </header>
+        <!-- SEARCH-BAR NUEVO (parte 2) INICIO----------------------------------------->
+        <div id="ctn-bars-search">
+            <input  type="text" 
+            id="inputSearch" 
+            placeholder="Buscá productos, categorías, marcas..."
+            >
+        </div>
+        <ul id="box-search"> <!-- Listado que aparece en el desplegable -->
+            <li><a href="#"><i class="fas fa-search"></i>PlayStation 5</a></li>
+            <li><a href="#"><i class="fas fa-search"></i>JBL GO</a></li>
+            <li><a href="#"><i class="fas fa-search"></i>Auriculares Bob Marley</a></li>
+            <li><a href="#"><i class="fas fa-search"></i>TV Sony 4K</a></li>
+            <li><a href="#"><i class="fas fa-search"></i>Notebook Lenovo</a></li>
+        </ul>
+        <div 
+            id="cover-ctn-search">
+        </div> <!-- Sombra generada en el html al usar el buscador-->
+        <!-- FIN SEARCH-BAR NUEVO (parte 2) ESTO ESTÁ POR FUERA DEL HEADER Y MAIN---->
+    
+    <main class="nosotros">
+        <div class="img-fondo"></div>
+        <section class="section1">
+            <div class="section1__history">
+                <h1>Nuestra Historia</h1>
+                <h2>Misión y Metas</h2>
+                <p>
+                    Connecticus S.A. es uno de los principales distribuidores de componentes electrónicos en Argentina.
+                    La compañía fue establecida en Septiembre de 1975 por nuestro actual presidente,
+                    el Sr. Juan H. Garbarino, luego de 9 años de trabajo en SIEMENS ARGENTINA en el desarrollo del mercado
+                    de componentes electrónicos en Argentina. Connecticus S.A. está situada en La Ciudad de Buenos Aires,
+                    capital de nuestro país, y cuenta con representantes en las principales ciudades industriales
+                    de nuestro territorio así como nuestro representante de ventas en Brasil.
+                    La actividad de la compañía es la comercialización y distribución de componentes electrónicos.
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores nihil quia quidem vitae aliquid
+                    praesentium autem tempore nesciunt architecto! Sit ipsam ullam veritatis error rerum mollitia natus
+                    eveniet accusantium amet vel hic maxime, inventore velit nisi recusandae suscipit eaque? Quo itaque
+                    voluptates quis dolorem numquam exercitationem ullam est eligendi maxime!
+                </p>
+            </div>
+        </section>
+        <section class="section2">
+            <div class="section2__objetivo">
+                <p>
+                    <b>Nuestro Objetivo:</b> Proveer a nuestro mercado productos de la más alta calidad a precios competitivos.
+                    Nuestros Clientes son atendidos en nuestras oficinas situadas en Buenos Aires. Los clientes distantes
+                    pueden comunicarse con nuestro departamento de ventas y hacer sus pedidos con entrega a domicilio.
+                    También contamos con un departamento de venta exterior, cuya principal actividad es mantener permanente
+                    contacto con sus clientes asignados (la mayor parte fabricantes) para conocer sus requerimientos de
+                    precios, cotizaciones y consultas.
+                </p>
+                <p>
+                    Todo nuestro personal está altamente calificado y trabaja en un excelente entorno. Nosotros pensamos
+                    que éste es uno de los más importantes factores para ofrecer un buen servicio a nuestros clientes.
+                    Algunos de nuestros vendedores están localizados en otras ciudades de nuestro país y uno de ellos se
+                    encuentra en Brasil como representante de la compañía en ese mercado. La compañía cuenta también con
+                    consultores externos, personas idóneas especializadas en el planeamiento de nuestros cursos y seminarios
+                    que son dictados en instituciones educacionales y compañías renombradas.
+                </p>
+            </div>
+        </section>
+        <section class="section3">
+            <div class="section3__mision">
+                <img src="img/nosotros-img/mision.png" alt="mision">
+                <h2>Nuestra Misión</h2>
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laudantium, ullam!</p>
+            </div>
+            <div class="section3__comunidad">
+                <img src="img/nosotros-img/comunidad.png" alt="comunidad">
+                <h2>Nuestra Comunidad</h2>
+                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Obcaecati, officiis!</p>
+            </div>
+            <div class="section3__group">
+                <img src="img/nosotros-img/laburo.png" alt="laburo">
+                <h2>Únete a un Grupo de Trabajo</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi, corporis.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="nosotros">
+        <div class="container__footer">
+            <div class="box__footer">
+                <div class="terms">
+                    <img src="img/logo/logo2.png" alt="Logo">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Harum amet repudiandae cumque quod? Eius consequuntur earum,
+                        optio dolores iure eum!
+                    </p>
+                </div>
+            </div>
+            <div class="box__footer">
+                <h2>Connecticus</h2>
+                <ul>
+                    <li>
+                        <a href="#">Acerca de</a>
+                    </li>
+                    <li>
+                        <a href="#">Términos y Condiciones</a>
+                    </li>
+                    <li>
+                        <a href="#">Promociones</a>
+                    </li>
+                    <li>
+                        <a href="#">Políticas de calidad</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="box__footer">
+                <h2>Servicios</h2>
+                <ul>
+                    <li>
+                        <a href="#">Crédito Connecticus</a>
+                    </li>
+                    <li>
+                        <a href="#">Ventas Corporativas</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="box__footer">
+                <h2>Ayuda</h2>
+                <ul>
+                    <li>
+                        <a href="#">Sucursales</a>
+                    </li>
+                    <li>
+                        <a href="#">Preguntas Frecuentes</a>
+                    </li>
+                    <li>
+                        <a href="#">Planes Ahora</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="box__footer">
+                <h2>Redes Sociales</h2>
+                <ul>
+                    <li>
+                        <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fab fa-facebook"></i> Facebook</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fab fa-linkedin-in"></i> LikedIn</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="box-copyright">
+                <hr>
+                <p>Todos los derechos reservados &copy; 2021
+                    <b>Connecticus</b>
+                </p>
+            </div>
+        </div>
+    </footer>
+    <script src="js/script.js"></script>
 </body>
 </html>

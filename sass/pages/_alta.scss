@@ -1,0 +1,149 @@
+.form-container {
+    color: #ffffff;
+    padding-top: 185px;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    margin-bottom: 5em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    & h1 {
+        margin-bottom: 1em;
+        letter-spacing: 0.2em;
+        color: #b70e21;
+    }
+
+    & h1:hover {
+        color: #FFFFFF;
+        text-shadow: 0 -1px 4px #FFF, 0 -2px 10px #ff0, 0 -10px 20px #ff8000, 0 -18px 40px #F00;
+    }
+
+    &__form {
+        width: 100%;
+        display: inline-block;
+        box-shadow: 0 0 20px 0 rgba($color: #fdfdfd, $alpha: 0.3);
+        padding: 25px 50px;
+    }
+
+    &__form-option {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+
+        & label {
+            width: 15%;
+            margin: 0 auto;
+            margin-bottom: 10px;
+            padding: 0.25em;
+            font-weight: bold;
+            font-size: 1.3em;
+        }
+    
+        & label:hover {
+            border: #b70e21 solid 1px;
+        }
+    
+        & input, select {
+            width: 75%;
+            margin: 0 auto;
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    }
+
+    &__form-file {
+        width: 75%;
+        margin: 0 auto;
+        margin-top: 10px;
+        margin-bottom: 20px;
+
+        & label {
+            margin-right: 5px;
+            font-weight: bold;
+            font-size: 1.3em;
+        }
+    }
+
+    &__form-details {
+        display: flex;
+        flex-direction: column;
+
+        & legend {
+            text-align: left;
+            margin-left: 10px;
+            font-weight: bold;
+            border: #b70e21 solid 2px;
+            padding: 5px;
+        }
+
+        & label {
+            width: 20%;
+            margin: 0 auto;
+            margin-bottom: 10px;
+            padding: 0.25em;
+            font-weight: bold;
+            font-size: 1.3em;            
+        }
+
+        & input {
+            width: 25%;
+            margin: 0 auto;
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 5px;            
+        }
+
+        & textarea {
+            width: 75%;
+            margin: 0 auto;
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            resize: vertical;
+            max-height: 200px;
+        }
+    }
+
+    &__form-distribution {
+        margin: 20px 0;
+        padding: 10px;
+
+        & legend {
+            text-align: left;
+            margin-left: 10px;
+            font-weight: bold;
+            border: #b70e21 solid 2px;
+            padding: 5px;
+        }
+        
+        & label {
+            font-weight: bold;
+        }
+
+        & label:first-of-type {
+            margin-right: 20px;
+        }
+    }
+
+    &__buttons {
+        display: flex;
+        justify-content: space-evenly;
+
+        & input {
+            padding: 10px;
+            font-weight: bold;
+            background-color: #fff;
+            border-radius: 5px;
+        }
+
+        & input:hover {
+            background-color: #b70e21;
+            color: #fff;
+        }
+    }
+}
