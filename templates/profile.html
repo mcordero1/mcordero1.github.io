@@ -8,9 +8,11 @@
   <meta property="og:title" content="{{ profile.name }} · {{ profile.role }}">
   <meta property="og:description" content="{{ profile.introduction }}">
   <meta property="og:type" content="profile">
+  {% if site_url is defined %}<link rel="canonical" href="{{ site_url }}">
+  <meta property="og:url" content="{{ site_url }}">{% endif %}
   <title>{{ profile.name }} · {{ profile.role }}</title>
-  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="{{ asset_prefix | default('/static') }}/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="{{ asset_prefix | default('/static') }}/style.css">
 </head>
 <body>
   <a class="skip" href="#contenido">Saltar al contenido</a>
