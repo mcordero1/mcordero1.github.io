@@ -1,0 +1,15 @@
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+pytest-cache-files-*/
+.env
+.env.*
+!.env.example
+data/
+*.db
+*.db-*
+profile-edit*.json
+profile-backup*.json
+.DS_Store

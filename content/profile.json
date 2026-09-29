@@ -1,0 +1,93 @@
+{
+  "name": "Marcos Cordero Tenreyro",
+  "role": "Product Owner",
+  "specialty": "FinTech & Mercados de Capitales",
+  "location": "Buenos Aires, Argentina",
+  "email": "corderotenreyromarcos@gmail.com",
+  "linkedin": "https://www.linkedin.com/in/mcorderot/",
+  "introduction": "Conecto el negocio, la tecnología y las necesidades de los usuarios para desarrollar productos financieros.",
+  "about": [
+    "Mi experiencia combina estrategia de producto, plataformas de trading y conocimiento operativo del mercado de capitales. Trabajo desde la definición de la visión y el roadmap hasta el delivery y la mejora continua.",
+    "Traduzco necesidades de negocio en requerimientos claros, priorizo el backlog y coordino equipos de Desarrollo, Data, Compliance y Operaciones. Uso indicadores para orientar decisiones y herramientas de inteligencia artificial para mejorar la definición funcional y la documentación."
+  ],
+  "experience": [
+    {
+      "company": "Centaurus Securities S.A.",
+      "role": "Product Owner",
+      "period": "Abr 2024 — Jul 2026",
+      "description": "Visión, estrategia y evolución de soluciones FinTech para el mercado de capitales.",
+      "highlights": [
+        "Definición del roadmap, OKRs y backlog; gestión del ciclo de producto desde discovery hasta delivery y mejora continua.",
+        "Coordinación de equipos de Tecnología, Data, Compliance y Operaciones para alinear prioridades y requerimientos.",
+        "Automatización de procesos y cálculos regulatorios, reduciendo el procesamiento de horas a minutos.",
+        "Modelado de procesos BPMN, documentación de APIs e incorporación de IA a la definición funcional y la documentación."
+      ]
+    },
+    {
+      "company": "Mercado Abierto Electrónico S.A. · MAE",
+      "role": "Analista de Producto",
+      "period": "Jul 2023 — Mar 2024",
+      "description": "Análisis funcional de la suite de APIs MAE y de la web de operatoria de ruedas.",
+      "highlights": [
+        "Relevamiento y documentación de necesidades de usuarios internos y externos.",
+        "Definición de requerimientos con equipos técnicos y colaboración en la evolución de productos y sus interfaces."
+      ]
+    },
+    {
+      "company": "Primary S.A. · Holding Matba-Rofex",
+      "role": "Information Technology Support Officer",
+      "period": "Ago 2022 — Jul 2023",
+      "description": "Soporte técnico y continuidad operativa de plataformas de mercados de capitales.",
+      "highlights": [
+        "Resolución de incidencias junto con Soporte L1, Desarrollo y Producto; documentación técnica y funcional.",
+        "Automatización de controles operativos y chequeos diarios para asegurar estabilidad e integridad de datos."
+      ]
+    },
+    {
+      "company": "Primary S.A. · Holding Matba-Rofex",
+      "role": "Head of Customer Service",
+      "period": "Ago 2019 — Jul 2022",
+      "description": "Liderazgo del área de atención y soporte técnico-operativo a participantes del mercado.",
+      "highlights": [
+        "Soporte en registración de operaciones y gestión de procesos contables, impositivos y de compliance.",
+        "Interacción con CNV, AFIP y UIF y acompañamiento operativo y funcional a clientes."
+      ]
+    },
+    {
+      "company": "Balanz Capital Valores S.A.U.",
+      "role": "Especialista Administrativo · Backoffice & Clearing",
+      "period": "Feb 2017 — Jul 2019",
+      "description": "Liquidación de operaciones locales y coordinación de operaciones internacionales.",
+      "highlights": [
+        "Operatoria en BYMA, Matba-Rofex y MAV; coordinación con brokers del exterior.",
+        "Clearing con DTC, Euroclear, Clearstream, Iberclear y Caja de Valores; conciliaciones contables."
+      ]
+    },
+    {
+      "company": "INTL CIBSA · INTL FC Stone",
+      "role": "Oficial Administrativo · Compliance",
+      "period": "Ene 2013 — May 2014",
+      "description": "Gestión administrativa y cumplimiento regulatorio.",
+      "highlights": [
+        "Cumplimiento de normativa CNV y UIF y prevención de lavado de activos y financiamiento del terrorismo."
+      ]
+    }
+  ],
+  "education": [
+    {"title": "Contador Público", "institution": "Universidad Católica Argentina · UCA"},
+    {"title": "Product Manager", "institution": "Academia Kinetic Training"},
+    {"title": "Full Stack Engineer Developer", "institution": "Educación IT"},
+    {"title": "SQL Server Management · Fundamentos", "institution": "Educación IT"}
+  ],
+  "courses": [
+    {"title": "Blockchain, Criptomonedas y DeFi", "institution": "ITBA"},
+    {"title": "Análisis Técnico", "institution": "Academia Rubén J. Ullúa"},
+    {"title": "Análisis Elliot Wave", "institution": "Academia Rubén J. Ullúa"}
+  ],
+  "skills": [
+    {"name": "Producto", "items": ["Product Discovery", "Estrategia & Roadmap", "Backlog", "OKRs", "Stakeholder Management"]},
+    {"name": "Tecnología & procesos", "items": ["SQL", "APIs", "Inteligencia Artificial", "BPMN", "Scrum / Kanban", "Jira / Confluence"]},
+    {"name": "Mercados", "items": ["FinTech", "Trading", "Clearing", "Compliance", "Análisis financiero"]}
+  ],
+  "languages": ["Español · Nativo", "Inglés · Intermedio-avanzado"]
+}
