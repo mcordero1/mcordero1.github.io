@@ -63,7 +63,9 @@ Las pruebas cubren la lectura del perfil, cambios SQL visibles al recargar, cons
 
 ## Repositorio y despliegue
 
-Repositorio del proyecto: [mcordero1/mcordero1.github.io](https://github.com/mcordero1/mcordero1.github.io). La publicación del código y el despliegue de la aplicación son pasos independientes. El alojamiento de la aplicación todavía está pendiente de elección y configuración.
+Repositorio del proyecto: [mcordero1/mcordero1.github.io](https://github.com/mcordero1/mcordero1.github.io). La configuración elegida sin costo usa **Render Free + PostgreSQL en Neon Free**, dentro de las cuotas de ambos proveedores. El despliegue requiere iniciar sesión y configurar la conexión; todavía no hay una URL pública verificada.
+
+Ver [la guía de publicación gratuita y actualización del perfil](DEPLOY.md). `render.yaml` prepara un único Web Service gratuito, sin bases Render ni servicios pagos. `.python-version` selecciona Python 3.12.
 
 GitHub aloja el código. GitHub Pages es estático y no ejecuta este servidor Python. Este proyecto está preparado para un servidor Python convencional; Render es una opción. Cloudflare Workers admite FastAPI, pero esta aplicación requiere adaptar la persistencia y el acceso a archivos a su entorno antes de desplegar allí.
 
@@ -72,7 +74,7 @@ Para un servidor convencional:
 1. Crear PostgreSQL persistente y configurar `DATABASE_URL` como variable secreta del alojamiento. Se admiten URLs `postgresql://`, `postgres://` y `postgresql+psycopg://`.
 2. Instalar `requirements.txt` y ejecutar `python -m app.manage init` una vez antes de iniciar los procesos web. No lanzar varios procesos inicializadores simultáneamente contra una base vacía.
 3. Ejecutar `python -m uvicorn app.main:app --host 0.0.0.0 --port <puerto del proveedor>` detrás del HTTPS gestionado por el proveedor.
-4. Configurar comprobación de estado en `/health`, copias de seguridad y revisión de costos/retención del servicio elegido.
+4. Configurar comprobación de proceso en `/health/live`, copias de seguridad y revisión de cuotas/retención del servicio elegido. `/health` verifica PostgreSQL bajo demanda; no usarlo como sondeo periódico en Neon para permitir la suspensión del cómputo.
 5. Revisar el contenido público antes de subirlo. No subir `.env`, contraseñas, bases locales o copias de seguridad. `.gitignore` los excluye.
 
 SQLite local no debe usarse en un disco efímero de alojamiento: se perderían las ediciones al reemplazar la instancia. PostgreSQL está contemplado por el adaptador, pero la ejecución con un servidor PostgreSQL real todavía debe verificarse durante el despliegue.

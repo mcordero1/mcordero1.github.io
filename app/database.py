@@ -3,7 +3,9 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from sqlalchemy import JSON, DateTime, Integer, create_engine
+from sqlalchemy.engine import make_url
 from sqlalchemy.orm import DeclarativeBase, Mapped, Session, mapped_column
+from sqlalchemy.pool import NullPool
 
 from app.schemas import Profile
 
@@ -23,6 +25,9 @@ class ProfileRecord(Base):
 
 def make_engine(url: str | None = None):
     url = url or os.getenv("DATABASE_URL")
+    hosted = os.getenv("RENDER") == "true"
+    if hosted and not url:
+        raise ValueError("Configurá DATABASE_URL con la conexión PostgreSQL de Neon antes de desplegar.")
     if not url:
         (ROOT / "data").mkdir(exist_ok=True)
         url = "sqlite:///" + (ROOT / "data" / "profile.db").as_posix()
@@ -30,6 +35,14 @@ def make_engine(url: str | None = None):
         url = url.replace("postgres://", "postgresql+psycopg://", 1)
     elif url.startswith("postgresql://"):
         url = url.replace("postgresql://", "postgresql+psycopg://", 1)
+    parsed = make_url(url)
+    if hosted and parsed.get_backend_name() != "postgresql":
+        raise ValueError("Render requiere PostgreSQL persistente; SQLite se reserva para desarrollo local.")
+    if hosted and parsed.query.get("sslmode") not in {"require", "verify-ca", "verify-full"}:
+        raise ValueError("La conexión PostgreSQL publicada debe incluir sslmode=require o verificación TLS más estricta.")
+    if parsed.get_backend_name() == "postgresql":
+        # Cerrar conexiones inactivas permite que Neon suspenda su cómputo.
+        return create_engine(url, poolclass=NullPool, connect_args={"connect_timeout": 15})
     return create_engine(url, pool_pre_ping=True, connect_args={"check_same_thread": False} if url.startswith("sqlite") else {})
 
 

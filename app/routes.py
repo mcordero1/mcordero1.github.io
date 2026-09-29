@@ -28,3 +28,10 @@ def health(request: Request):
         return {"status": "ok"}
     except Exception:
         return JSONResponse({"status": "unavailable"}, status_code=503)
+
+
+@router.get("/health/live", tags=["Estado"])
+def liveness():
+    # Render consulta esta ruta periódicamente. No despertar PostgreSQL solo
+    # para comprobar que el proceso web sigue vivo: consume la cuota gratuita.
+    return {"status": "ok"}
