@@ -33,11 +33,12 @@ def build():
         autoescape=select_autoescape(["html"]),
         undefined=StrictUndefined,
     )
-    html = env.get_template("profile.html").render(profile=profile, asset_prefix="./static", site_url=SITE_URL)
+    rendered = env.get_template("profile.html").render(profile=profile, asset_prefix="./static", site_url=SITE_URL)
+    html = "\n".join(line.rstrip() for line in rendered.splitlines()) + "\n"
     (PUBLIC / "static").mkdir(parents=True, exist_ok=True)
     for name in ("style.css", "favicon.svg"):
         copyfile(ROOT / "static" / name, PUBLIC / "static" / name)
-    (PUBLIC / "index.html").write_text(html + "\n", encoding="utf-8")
+    (PUBLIC / "index.html").write_text(html, encoding="utf-8", newline="\n")
     (PUBLIC / ".nojekyll").write_text("", encoding="utf-8")
     # Comprobar el HTML generado y los destinos internos antes de publicarlo.
     check = LinkCheck()
