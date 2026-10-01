@@ -1,10 +1,13 @@
+import os
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 
 from app.database import ROOT, initialize, make_engine
+from app.portfolio.router import router as portfolio_router
 from app.routes import router
 
 
@@ -18,7 +21,20 @@ def create_app(database_url: str | None = None) -> FastAPI:
         engine.dispose()
 
     app = FastAPI(title="Perfil profesional — Marcos Cordero Tenreyro", version="0.1.0", lifespan=lifespan)
+
+    # CORS: permite al frontend estático en GitHub Pages llamar al backend
+    cors_origin = os.getenv("PORTFOLIO_CORS_ORIGIN", "https://mcordero1.github.io")
+    allowed_origins = [cors_origin, "http://localhost:8001", "http://127.0.0.1:8001"]
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=allowed_origins,
+        allow_credentials=False,
+        allow_methods=["GET", "POST"],
+        allow_headers=["Content-Type", "Accept"],
+    )
+
     app.include_router(router)
+    app.include_router(portfolio_router)
     app.mount("/static", StaticFiles(directory=ROOT / "static"), name="static")
 
     @app.middleware("http")
