@@ -1,0 +1,42 @@
+/* Compact, keyboard-accessible profile controls. */
+.nav-wrap {display:grid;grid-template-columns:auto 1fr auto;gap:24px}
+.header nav {justify-content:flex-end;gap:24px}
+.preferences {display:flex;align-items:center;gap:6px}
+.icon-control {display:inline-flex;align-items:center;justify-content:center;gap:6px;min-width:44px;min-height:44px;padding:8px;border:1px solid var(--line);border-radius:6px;background:transparent;color:var(--fg);cursor:pointer;font:inherit}
+.icon-control:hover {color:var(--accent);border-color:var(--accent)}
+.icon-control:focus-visible {outline:2px solid var(--accent);outline-offset:4px}
+.icon-control svg {width:20px;height:20px;flex:none}
+.locale-label {font:11px var(--mono)}
+.theme-toggle[hidden],.moon-icon {display:none}
+[data-theme="light"] .sun-icon {display:none}
+[data-theme="light"] .moon-icon {display:block}
+@media screen {
+  :root[data-theme="light"] {color-scheme:light;--bg:#f5f7f3;--panel:#eaf1eb;--fg:#152d25;--soft:#496158;--accent:#126044;--line:#c3d1c7}
+  [data-theme="light"] .header {background:rgba(245,247,243,.97)}
+  [data-theme="light"] .focus-panel {background:linear-gradient(135deg,#edf4ed,#e4eee7);border-color:#b5cabe;box-shadow:0 16px 50px #2543330a}
+  [data-theme="light"] .focus-row {border-color:var(--line)}
+  [data-theme="light"] .focus-number,[data-theme="light"] .focus-symbol {color:var(--accent)}
+  [data-theme="light"] .signal i {background:var(--accent)}
+  [data-theme="light"] .market-strip,[data-theme="light"] .skills-band {background:var(--panel)}
+  [data-theme="light"] .skill-group {border-color:#86a592}
+  [data-theme="light"] .skill-group li {color:var(--fg);border-color:#b5cabe;background:#f7faf6}
+  [data-theme="light"] .button {background:var(--accent);border-color:var(--accent);color:#fff}
+  [data-theme="light"] .button:hover {background:#0c4b34;border-color:#0c4b34}
+  [data-theme="light"] .muted {color:var(--soft)}
+  [data-theme="light"] .highlights li::marker {color:var(--accent)}
+  [data-theme="light"] .languages {border-color:#86a592}
+  [data-theme="light"] .timeline-dot {border-color:var(--accent)}
+  [data-theme="light"] .job:first-child .job-content {border-color:#86a592}
+  [data-theme="light"] .skip {color:#fff}
+}
+@media(max-width:1250px) {.brand-label {display:none}}
+@media(max-width:850px) {.nav-wrap{gap:16px}.header nav{gap:16px}.header .nav-contact{padding-left:16px}}
+@media(max-width:700px) {
+  html{scroll-padding-top:195px}
+  .nav-wrap{grid-template-columns:1fr auto;gap:4px 12px;padding-block:10px 6px}
+  .brand{grid-column:1;grid-row:1}
+  .preferences{grid-column:2;grid-row:1}
+  .header nav{grid-column:1 / -1;grid-row:2;justify-content:center;gap:0 16px}
+  .header .nav-contact{padding:0}
+}
+@media print {.preferences{display:none}}
