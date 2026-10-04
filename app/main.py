@@ -26,7 +26,7 @@ def create_app(database_url: str | None = None) -> FastAPI:
         response = await call_next(request)
         response.headers["X-Content-Type-Options"] = "nosniff"
         response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
-        if request.url.path == "/" or request.url.path.startswith("/api/"):
+        if request.url.path in {"/", "/en/"} or request.url.path.startswith("/api/"):
             response.headers["Cache-Control"] = "no-store"
             response.headers["Content-Security-Policy"] = "default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self' data:; frame-ancestors 'none'; base-uri 'self'; form-action 'none'"
         return response

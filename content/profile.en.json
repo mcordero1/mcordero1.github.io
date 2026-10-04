@@ -1,0 +1,145 @@
+{
+  "name": "Marcos Cordero Tenreyro",
+  "role": "Product Owner",
+  "specialty": "FinTech & Capital Markets",
+  "location": "Buenos Aires, Argentina",
+  "email": "corderotenreyromarcos@gmail.com",
+  "linkedin": "https://www.linkedin.com/in/mcorderot/",
+  "introduction": "I connect business, technology and user needs to build financial products.",
+  "about": [
+    "My experience combines product strategy, trading platforms and operational knowledge of capital markets. I work across the product lifecycle, from defining the vision and roadmap to delivery and continuous improvement.",
+    "I translate business needs into clear requirements, prioritize the backlog and coordinate Development, Data, Compliance and Operations teams. I use metrics to guide decisions and AI tools to improve functional specifications and documentation."
+  ],
+  "experience": [
+    {
+      "company": "Centaurus Securities S.A.",
+      "role": "Product Owner",
+      "period": "Apr 2024 — Jul 2026",
+      "description": "Product vision, strategy and development of FinTech solutions for capital markets.",
+      "highlights": [
+        "Defined the roadmap, OKRs and backlog; managed the product lifecycle from discovery through delivery and continuous improvement.",
+        "Coordinated Technology, Data, Compliance and Operations teams to align priorities and requirements.",
+        "Automated processes and regulatory calculations, reducing processing time from hours to minutes.",
+        "Modeled processes with BPMN, documented APIs and incorporated AI into functional specifications and documentation."
+      ]
+    },
+    {
+      "company": "Mercado Abierto Electrónico S.A. · MAE",
+      "role": "Product Analyst",
+      "period": "Jul 2023 — Mar 2024",
+      "description": "Functional analysis of the MAE API suite and the trading operations website.",
+      "highlights": [
+        "Gathered and documented internal and external user needs.",
+        "Defined requirements with technical teams and contributed to the development of products and their interfaces."
+      ]
+    },
+    {
+      "company": "Primary S.A. · Holding Matba-Rofex",
+      "role": "Information Technology Support Officer",
+      "period": "Aug 2022 — Jul 2023",
+      "description": "Technical support and operational continuity for capital markets platforms.",
+      "highlights": [
+        "Resolved incidents with L1 Support, Development and Product teams; produced technical and functional documentation.",
+        "Automated operational controls and daily checks to support stability and data integrity."
+      ]
+    },
+    {
+      "company": "Primary S.A. · Holding Matba-Rofex",
+      "role": "Head of Customer Service",
+      "period": "Aug 2019 — Jul 2022",
+      "description": "Led customer service and technical and operational support for market participants.",
+      "highlights": [
+        "Supported trade registration and accounting, tax and compliance processes.",
+        "Liaised with CNV, AFIP and UIF and provided operational and functional support to clients."
+      ]
+    },
+    {
+      "company": "Balanz Capital Valores S.A.U.",
+      "role": "Administrative Specialist · Back Office & Clearing",
+      "period": "Feb 2017 — Jul 2019",
+      "description": "Settlement of local trades and coordination of international transactions.",
+      "highlights": [
+        "Handled operations on BYMA, Matba-Rofex and MAV; coordinated with international brokers.",
+        "Managed clearing with DTC, Euroclear, Clearstream, Iberclear and Caja de Valores; performed accounting reconciliations."
+      ]
+    },
+    {
+      "company": "INTL CIBSA · INTL FC Stone",
+      "role": "Administrative Officer · Compliance",
+      "period": "Jan 2013 — May 2014",
+      "description": "Administrative operations and regulatory compliance.",
+      "highlights": [
+        "Supported compliance with CNV and UIF regulations and anti-money laundering and counter-terrorist financing requirements."
+      ]
+    }
+  ],
+  "education": [
+    {
+      "title": "Product Manager",
+      "institution": "Academia Kinetic Training"
+    },
+    {
+      "title": "Blockchain, Cryptocurrencies and DeFi",
+      "institution": "ITBA"
+    },
+    {
+      "title": "Full Stack Engineer Developer",
+      "institution": "Educación IT"
+    },
+    {
+      "title": "SQL Server Management · Fundamentals",
+      "institution": "Educación IT"
+    },
+    {
+      "title": "Public Accounting (Contador Público)",
+      "institution": "Universidad Católica Argentina · UCA"
+    }
+  ],
+  "courses": [
+    {
+      "title": "Technical Analysis",
+      "institution": "Academia Rubén J. Ullúa"
+    },
+    {
+      "title": "Elliott Wave Analysis",
+      "institution": "Academia Rubén J. Ullúa"
+    }
+  ],
+  "skills": [
+    {
+      "name": "Product",
+      "items": [
+        "Product Discovery",
+        "Strategy & Roadmap",
+        "Backlog",
+        "OKRs",
+        "Stakeholder Management"
+      ]
+    },
+    {
+      "name": "Technology & processes",
+      "items": [
+        "SQL",
+        "APIs",
+        "Artificial Intelligence",
+        "BPMN",
+        "Scrum / Kanban",
+        "Jira / Confluence"
+      ]
+    },
+    {
+      "name": "Markets",
+      "items": [
+        "FinTech",
+        "Trading",
+        "Clearing",
+        "Compliance",
+        "Financial Analysis"
+      ]
+    }
+  ],
+  "languages": [
+    "Spanish · Native",
+    "English · Upper-intermediate"
+  ]
+}

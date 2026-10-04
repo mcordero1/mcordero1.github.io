@@ -27,3 +27,8 @@ GitHub Pages está disponible sin costo en repositorios públicos con GitHub Fre
 La configuración anterior de Render fue retirada. No se crearon servicios ni bases de datos en Render o Neon durante la preparación de este proyecto.
 
 Documentación: https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site
+
+
+## Entrega bilingüe en revisión
+
+La rama `feature/profile-preferences` genera español en `/` e inglés en `/en/`, con cambio de apariencia local. Probar ambos idiomas y temas antes de integrarla en main. Portfolio Health permanece en su rama independiente; no se incluye en esta entrega.
