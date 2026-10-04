@@ -51,7 +51,5 @@
   "scheduling_label": "LET’S CONTINUE THE CONVERSATION",
   "scheduling_title": "Schedule an interview",
   "scheduling_intro": "Choose an available date and time to discuss your opportunity.",
-  "scheduling_external": "Open in Calendly",
-  "scheduling_calendar": "Interview scheduling calendar",
-  "scheduling_note": "Your booking is confirmed when you complete the Calendly form. If the calendar does not load, open it using the link above."
+  "scheduling_calendar": "Interview scheduling calendar"
 }

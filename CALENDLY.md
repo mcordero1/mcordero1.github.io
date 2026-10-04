@@ -1,7 +1,7 @@
 # Entrevistas en desarrollo
 
 Rama: `feature/calendly-interviews`, creada desde `main` en `4c57f34`.
-La sección Contacto contiene el widget oficial de Calendly y un enlace alternativo.
+La sección Contacto contiene el widget oficial de Calendly.
 Los textos del sitio están en español e inglés. El widget conserva el idioma,
 los colores y las reglas configurados en Calendly; su paleta permanece clara
 para mantener la legibilidad en ambos modos del sitio con el plan Free.

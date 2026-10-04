@@ -51,7 +51,5 @@
   "scheduling_label": "SIGAMOS LA CONVERSACIÓN",
   "scheduling_title": "Agendar entrevista",
   "scheduling_intro": "Elegí un día y un horario disponible para conversar sobre tu propuesta.",
-  "scheduling_external": "Abrir en Calendly",
-  "scheduling_calendar": "Calendario para agendar una entrevista",
-  "scheduling_note": "La reserva se confirma al completar el formulario de Calendly. Si el calendario no carga, podés abrirlo con el enlace de arriba."
+  "scheduling_calendar": "Calendario para agendar una entrevista"
 }
