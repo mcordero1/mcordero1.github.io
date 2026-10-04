@@ -47,5 +47,9 @@
   "switch_language": "Cambiar a inglés",
   "switch_light": "Cambiar a modo claro",
   "switch_dark": "Cambiar a modo oscuro",
-  "preferences": "Idioma y apariencia"
+  "preferences": "Idioma y apariencia",
+  "scheduling_label": "SIGAMOS LA CONVERSACIÓN",
+  "scheduling_title": "Agendar entrevista",
+  "scheduling_intro": "Elegí un día y un horario disponible para conversar sobre tu propuesta.",
+  "scheduling_calendar": "Calendario para agendar una entrevista"
 }

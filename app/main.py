@@ -28,7 +28,7 @@ def create_app(database_url: str | None = None) -> FastAPI:
         response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
         if request.url.path in {"/", "/en/"} or request.url.path.startswith("/api/"):
             response.headers["Cache-Control"] = "no-store"
-            response.headers["Content-Security-Policy"] = "default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self' data:; frame-ancestors 'none'; base-uri 'self'; form-action 'none'"
+            response.headers["Content-Security-Policy"] = "default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' https://assets.calendly.com; frame-src https://calendly.com; img-src 'self' data:; frame-ancestors 'none'; base-uri 'self'; form-action 'none'"
         return response
 
     @app.exception_handler(404)

@@ -1,0 +1,12 @@
+.contact {flex-wrap:wrap}
+.scheduling {width:100%;min-width:0;margin-top:56px;padding-top:36px;border-top:1px solid var(--line)}
+.scheduling-heading {margin-bottom:24px}
+.scheduling-heading .eyebrow {margin-bottom:12px;color:var(--accent)}
+.scheduling-heading h3 {font-size:clamp(26px,3vw,36px);line-height:1.2;margin-bottom:14px;font-weight:550;letter-spacing:-.7px}
+.scheduling-heading p:not(.eyebrow) {max-width:620px;color:var(--soft);margin-bottom:0}
+.calendly-inline-widget {width:100%;min-width:320px;height:780px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;color-scheme:light}
+@media(max-width:700px) {
+  .scheduling {margin-top:36px;padding-top:28px}
+  .calendly-inline-widget {min-width:0;height:1100px;border-radius:8px}
+}
+@media print {.scheduling{display:none}}
