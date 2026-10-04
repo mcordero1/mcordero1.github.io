@@ -13,12 +13,12 @@ templates = Jinja2Templates(directory=ROOT / "templates")
 
 @router.get("/", response_class=HTMLResponse, include_in_schema=False)
 def home(request: Request):
-    return templates.TemplateResponse(request=request, name="profile.html", context={"profile": read_profile(request.app.state.engine), **locale_context("es", "/en/")})
+    return templates.TemplateResponse(request=request, name="profile.html", context={"profile": read_profile(request.app.state.engine), **locale_context("es", "/en/?v=2")})
 
 
 @router.get("/en/", response_class=HTMLResponse, include_in_schema=False)
 def home_english(request: Request):
-    return templates.TemplateResponse(request=request, name="profile.html", context={"profile": localized_profile("en"), **locale_context("en", "/")})
+    return templates.TemplateResponse(request=request, name="profile.html", context={"profile": localized_profile("en"), **locale_context("en", "/?v=2")})
 
 
 @router.get("/api/v1/profile", response_model=Profile, tags=["Perfil"])

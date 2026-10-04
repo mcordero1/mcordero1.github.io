@@ -8,7 +8,7 @@ def test_bilingual_build_has_complete_navigation_and_no_agent(tmp_path, monkeypa
     spanish = (tmp_path / 'index.html').read_text(encoding='utf-8')
     english = (tmp_path / 'en/index.html').read_text(encoding='utf-8')
     assert 'lang="es"' in spanish and 'lang="en"' in english
-    assert 'href="./en/"' in spanish and 'href="../"' in english
+    assert 'href="./en/?v=2"' in spanish and 'href="../?v=2"' in english
     assert 'Cambiar a inglés' in spanish and 'Switch to Spanish' in english
     assert 'Cambiar a modo claro' in spanish and 'Switch to light mode' in english
     assert 'View responsibilities' in english and 'Ver responsabilidades' not in english

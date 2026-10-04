@@ -39,7 +39,7 @@ def build():
         directory = PUBLIC / 'en' if english else PUBLIC
         profile = localized_profile(language)
         rendered = env.get_template('profile.html').render(
-            profile=profile, **locale_context(language, '../' if english else './en/'),
+            profile=profile, **locale_context(language, '../?v=2' if english else './en/?v=2'),
             asset_prefix='../static' if english else './static',
             site_url=SITE_URL + ('en/' if english else ''),
             alternate_urls={'es': SITE_URL, 'en': SITE_URL + 'en/', 'x-default': SITE_URL},
