@@ -47,5 +47,11 @@
   "switch_language": "Switch to Spanish",
   "switch_light": "Switch to light mode",
   "switch_dark": "Switch to dark mode",
-  "preferences": "Language and appearance"
+  "preferences": "Language and appearance",
+  "scheduling_label": "LET’S CONTINUE THE CONVERSATION",
+  "scheduling_title": "Schedule an interview",
+  "scheduling_intro": "Choose an available date and time to discuss your opportunity.",
+  "scheduling_external": "Open in Calendly",
+  "scheduling_calendar": "Interview scheduling calendar",
+  "scheduling_note": "Your booking is confirmed when you complete the Calendly form. If the calendar does not load, open it using the link above."
 }
