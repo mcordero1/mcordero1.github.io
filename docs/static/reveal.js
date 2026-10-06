@@ -4,58 +4,74 @@
   function initialize() {
     if (!('IntersectionObserver' in window) || !Element.prototype.animate) return;
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (reducedMotion.matches) return;
     const targets = [...document.querySelectorAll([
       '.hero-main', '.focus-panel', '.section-heading', '.prose > p',
       '.section-title-row', '.job', '.skills-band .eyebrow',
       '#habilidades-title', '.skill-group', '.education-list > article',
       '.courses-title', '.contact > div', '.scheduling-heading'
     ].join(','))];
-    const initialViewport = new Set(targets.filter(element => {
-      const bounds = element.getBoundingClientRect();
-      return bounds.bottom > 0 && bounds.top < window.innerHeight;
-    }));
     const animations = new Map();
-
-    function cancel(element) {
-      animations.get(element)?.cancel();
-      animations.delete(element);
+    const duration = 760;
+    // Prepare offscreen blocks first: never flash visible content and then dim it.
+    for (const element of targets) {
+      const bounds = element.getBoundingClientRect();
+      const visible = bounds.bottom > 0 && bounds.top < window.innerHeight;
+      const animation = element.animate([
+        {opacity: 0, transform: 'translateY(24px)'},
+        {opacity: 1, transform: 'translateY(0)'}
+      ], {duration, easing: 'cubic-bezier(0.16, 1, 0.3, 1)', fill: 'both'});
+      animation.pause();
+      animation.currentTime = visible ? duration : 0;
+      animations.set(element, animation);
     }
 
-    // Content stays visible by default, including when JavaScript is unavailable.
     const observer = new IntersectionObserver(entries => {
       for (const entry of entries) {
         const element = entry.target;
-        if (!entry.isIntersecting) {
-          cancel(element);
-          initialViewport.delete(element);
-          continue;
+        const animation = animations.get(element);
+        if (!animation) continue;
+        if (entry.isIntersecting) {
+          if (element.contains(document.activeElement)) animation.finish();
+          else animation.play();
+        } else {
+          // Reset only outside the buffered viewport, never during reading.
+          animation.pause();
+          animation.currentTime = 0;
         }
-        if (initialViewport.delete(element) || reducedMotion.matches ||
-            element.contains(document.activeElement)) continue;
-        cancel(element);
-        const distance = entry.boundingClientRect.top < 0 ? -18 : 18;
-        const animation = element.animate([
-          {opacity: 0.25, transform: `translateY(${distance}px)`},
-          {opacity: 1, transform: 'translateY(0)'}
-        ], {duration: 620, easing: 'cubic-bezier(0.22, 1, 0.36, 1)'});
-        animations.set(element, animation);
-        animation.onfinish = () => {
-          if (animations.get(element) === animation) animations.delete(element);
-        };
       }
-    }, {threshold: 0, rootMargin: '0px 0px -6% 0px'});
+    }, {threshold: 0, rootMargin: `${Math.round(window.innerHeight * 0.12)}px 0px`});
     targets.forEach(element => observer.observe(element));
 
     document.addEventListener('focusin', event => {
-      targets.filter(element => element.contains(event.target)).forEach(cancel);
+      targets.filter(element => element.contains(event.target))
+        .forEach(element => animations.get(element)?.finish());
     });
-    const cancelAll = () => [...animations.keys()].forEach(cancel);
-    reducedMotion.addEventListener('change', cancelAll);
-    window.addEventListener('beforeprint', cancelAll);
-    window.addEventListener('pagehide', cancelAll);
+    function disable() {
+      observer.disconnect();
+      animations.forEach(animation => animation.cancel());
+      animations.clear();
+    }
+    reducedMotion.addEventListener('change', event => {
+      if (event.matches) disable();
+    });
+    window.addEventListener('beforeprint', disable);
+    document.querySelectorAll('a[href^="#"]')
+      .forEach(link => link.addEventListener('click', () => {
+        const destination = document.getElementById(link.hash.slice(1));
+        targets.filter(element => destination?.contains(element))
+          .forEach(element => animations.get(element)?.finish());
+      }));
+    // Language restoration runs at load; show the restored reading position.
+    window.addEventListener('load', () => requestAnimationFrame(() => {
+      targets.filter(element => {
+        const bounds = element.getBoundingClientRect();
+        return bounds.bottom > 0 && bounds.top < window.innerHeight;
+      }).forEach(element => animations.get(element)?.finish());
+    }), {once: true});
   }
 
-  // Wait for anchor and language-position restoration before observing sections.
-  if (document.readyState === 'complete') requestAnimationFrame(initialize);
-  else window.addEventListener('load', () => requestAnimationFrame(initialize), {once: true});
+  // No dependency on Calendly or other external resources finishing their load.
+  if (document.readyState !== 'loading') requestAnimationFrame(initialize);
+  else document.addEventListener('DOMContentLoaded', () => requestAnimationFrame(initialize), {once: true});
 })();
