@@ -31,7 +31,7 @@ def build():
     env = Environment(loader=FileSystemLoader(ROOT / 'templates'), autoescape=select_autoescape(['html']), undefined=StrictUndefined)
     (PUBLIC / 'static').mkdir(parents=True, exist_ok=True)
     (PUBLIC / 'en').mkdir(parents=True, exist_ok=True)
-    for name in ('style.css', 'favicon.svg', 'preferences.js', 'preferences.css', 'scheduling.css'):
+    for name in ('style.css', 'favicon.svg', 'preferences.js', 'preferences.css', 'scheduling.css', 'reveal.js'):
         copyfile(ROOT / 'static' / name, PUBLIC / 'static' / name)
     pages = []
     for language in ('es', 'en'):
