@@ -7,6 +7,10 @@
 @media(max-width:360px){.header nav{gap:10px}.wrap,.nav-wrap{width:calc(100% - 32px)}h1{font-size:44px}.hero-actions{gap:16px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
 /* Profile readability: keep the agent's component styles independent. */
+@media screen and (min-width:701px) {
+  .skill-groups {grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+.education-list .education-period {margin-top:6px;font:13px/1.7 var(--mono);color:var(--soft)}
 @media screen {
   .header nav {font-size:16px;gap:30px}
   .header nav a {min-height:44px;display:inline-flex;align-items:center;white-space:nowrap}

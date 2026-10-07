@@ -75,6 +75,7 @@
   ],
   "education": [
     {"title": "Product Manager", "institution": "Academia Kinetic Training"},
+    {"title": "L100 · Fundamentos de IA Generativa", "institution": "AWS GenIA University", "period": "Sept. de 2026"},
     {"title": "Blockchain, Criptomonedas y DeFi", "institution": "ITBA"},
     {"title": "Full Stack Engineer Developer", "institution": "Educación IT"},
     {"title": "SQL Server Management · Fundamentos", "institution": "Educación IT"},
@@ -86,7 +87,8 @@
   ],
   "skills": [
     {"name": "Producto", "items": ["Product Discovery", "Estrategia & Roadmap", "Backlog", "OKRs", "Stakeholder Management"]},
-    {"name": "Tecnología & procesos", "items": ["SQL", "APIs", "Inteligencia Artificial", "BPMN", "Scrum / Kanban", "Jira / Confluence"]},
+    {"name": "Tecnología & procesos", "items": ["SQL", "APIs", "BPMN", "Scrum / Kanban", "Jira / Confluence"]},
+    {"name": "Inteligencia Artificial", "items": ["Fundamentos de IA Generativa", "Prompt Engineering", "RAG", "Embeddings", "Chunking", "Tokenización", "Optimización de costos", "Bases de datos vectoriales"]},
     {"name": "Mercados", "items": ["FinTech", "Trading", "Clearing", "Compliance", "Análisis financiero"]}
   ],
   "languages": ["Español · Nativo", "Inglés · Intermedio-avanzado"]

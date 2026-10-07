@@ -20,6 +20,7 @@ class Experience(Record):
 class Education(Record):
     title: Text
     institution: Text
+    period: Text | None = None
 
 
 class SkillGroup(Record):

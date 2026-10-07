@@ -15,7 +15,7 @@ def test_bilingual_build_has_complete_navigation_and_no_agent(tmp_path, monkeypa
     for html in (spanish, english):
         assert 'portfolio-health' not in html and 'portfolio.js' not in html
         assert html.count('<article class="job">') == 6
-        assert html.index('Product Manager') < html.index('Blockchain')
+        assert html.index('Product Manager') < html.index('AWS GenIA University') < html.index('Blockchain')
         assert 'preferences.js' in html and 'preferences.css' in html
     assert (tmp_path / 'static/preferences.js').is_file()
 
@@ -23,7 +23,7 @@ def test_bilingual_build_has_complete_navigation_and_no_agent(tmp_path, monkeypa
 def test_translation_preserves_identity_and_record_structure():
     es, en = localized_profile('es'), localized_profile('en')
     assert es.name == en.name and es.email == en.email and es.linkedin == en.linkedin
-    assert len(es.education) == len(en.education) == 5
+    assert len(es.education) == len(en.education) == 6
     assert len(es.courses) == len(en.courses) == 2
     assert [j.company for j in es.experience] == [j.company for j in en.experience]
     assert [len(j.highlights) for j in es.experience] == [len(j.highlights) for j in en.experience]

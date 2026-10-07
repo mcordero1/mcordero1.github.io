@@ -79,6 +79,11 @@
       "institution": "Academia Kinetic Training"
     },
     {
+      "title": "L100 · Generative AI Fundamentals",
+      "institution": "AWS GenIA University",
+      "period": "September 2026"
+    },
+    {
       "title": "Blockchain, Cryptocurrencies and DeFi",
       "institution": "ITBA"
     },
@@ -121,10 +126,22 @@
       "items": [
         "SQL",
         "APIs",
-        "Artificial Intelligence",
         "BPMN",
         "Scrum / Kanban",
         "Jira / Confluence"
+      ]
+    },
+    {
+      "name": "Artificial Intelligence",
+      "items": [
+        "Generative AI Fundamentals",
+        "Prompt Engineering",
+        "RAG",
+        "Embeddings",
+        "Chunking",
+        "Tokenization",
+        "Cost Optimization",
+        "Vector Databases"
       ]
     },
     {
