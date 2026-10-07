@@ -58,10 +58,10 @@
       <div class="section-heading"><p class="eyebrow index">{{ ui.profile_index }}</p><h2 id="perfil-title">{{ ui.understand }}<br>{{ ui.build }}</h2></div>
       <div class="prose">{% for paragraph in profile.about %}<p>{{ paragraph }}</p>{% endfor %}
         <details class="cv-downloads">
-          <summary class="button">{{ ui.download_cv }} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m-4-4 4 4 4-4M5 16v5h14v-5"/></svg></summary>
+          <summary class="button">{{ ui.download_cv }} <svg class="cv-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>
           <div class="cv-download-options" role="group" aria-label="{{ ui.cv_versions }}">
-            <a href="{{ download_prefix | default('/downloads') }}/CV-Marcos-Cordero.pdf" download="CV-Marcos-Cordero.pdf" aria-label="{{ ui.download_pdf }}">CV <span>PDF</span></a>
-            <a href="{{ download_prefix | default('/downloads') }}/CV-Marcos-Cordero-ATS.docx" download="CV-Marcos-Cordero-ATS.docx" aria-label="{{ ui.download_word }}">CV - ATS <span>Word</span></a>
+            <a href="{{ download_prefix | default('/downloads') }}/CV-Marcos-Cordero.pdf" download="CV-Marcos-Cordero.pdf" aria-label="{{ ui.download_pdf }}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m-4-4 4 4 4-4M5 21h14"/></svg>CV</a>
+            <a href="{{ download_prefix | default('/downloads') }}/CV-Marcos-Cordero-ATS.docx" download="CV-Marcos-Cordero-ATS.docx" aria-label="{{ ui.download_word }}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m-4-4 4 4 4-4M5 21h14"/></svg>CV - ATS</a>
           </div>
         </details>
       </div>

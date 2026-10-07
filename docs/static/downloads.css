@@ -1,11 +1,13 @@
-.cv-downloads {margin-top:28px;font-size:16px}
-.cv-downloads > summary.button {width:max-content;max-width:100%;cursor:pointer;list-style:none;border-bottom:1px solid var(--accent);color:#11221a;font-size:16px;padding:14px 22px}
+.cv-downloads {position:relative;width:max-content;max-width:100%;margin-top:28px;font-size:16px}
+.cv-downloads > summary.button {width:max-content;max-width:100%;cursor:pointer;list-style:none;border-bottom:1px solid var(--accent);border-radius:999px;color:#11221a;font-size:16px;padding:12px 22px;gap:12px}
 [data-theme="light"] .cv-downloads > summary.button {color:#fff}
 .cv-downloads > summary::-webkit-details-marker {display:none}
-.cv-downloads > summary svg {width:20px;height:20px;flex:none}
-.cv-download-options {display:flex;flex-wrap:wrap;gap:12px;padding-top:16px}
-.cv-download-options a {display:inline-flex;align-items:center;justify-content:space-between;gap:24px;min-height:48px;padding:12px 18px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--fg);font-size:16px;font-weight:500}
-.cv-download-options a:hover {border-color:var(--accent);color:var(--accent)}
-.cv-download-options span {font:12px var(--mono);color:var(--soft)}
-@media(max-width:700px) {.cv-download-options a{flex:1 1 140px}}
+.cv-downloads svg {width:20px;height:20px;flex:none}
+.cv-chevron {transition:transform .18s ease}
+.cv-downloads[open] .cv-chevron {transform:rotate(180deg)}
+.cv-download-options {position:absolute;z-index:5;top:calc(100% + 10px);left:0;display:flex;flex-direction:column;width:240px;max-width:calc(100vw - 40px);padding:10px;background:var(--panel);border:1px solid var(--line);border-radius:18px;box-shadow:0 12px 32px #0003}
+.cv-download-options a {display:flex;align-items:center;gap:14px;min-height:48px;padding:10px 14px;border-radius:10px;color:var(--fg);font-size:16px;font-weight:600;line-height:1.5}
+.cv-download-options a:hover {background:var(--line);color:var(--accent)}
+.cv-download-options a:focus-visible {outline-offset:-2px}
+@media(prefers-reduced-motion:reduce) {.cv-chevron{transition:none}}
 @media print {.cv-downloads{display:none}}
