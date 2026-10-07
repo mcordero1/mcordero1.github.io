@@ -51,5 +51,9 @@
   "scheduling_label": "SIGAMOS LA CONVERSACIÓN",
   "scheduling_title": "Agendar entrevista",
   "scheduling_intro": "Elegí un día y un horario disponible para conversar sobre tu propuesta.",
-  "scheduling_calendar": "Calendario para agendar una entrevista"
+  "scheduling_calendar": "Calendario para agendar una entrevista",
+  "download_cv": "Descargar CV",
+  "cv_versions": "Versiones del CV para descargar",
+  "download_pdf": "Descargar CV en PDF (español)",
+  "download_word": "Descargar CV - ATS en Word (español)"
 }

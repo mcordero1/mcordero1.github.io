@@ -51,5 +51,9 @@
   "scheduling_label": "LET’S CONTINUE THE CONVERSATION",
   "scheduling_title": "Schedule an interview",
   "scheduling_intro": "Choose an available date and time to discuss your opportunity.",
-  "scheduling_calendar": "Interview scheduling calendar"
+  "scheduling_calendar": "Interview scheduling calendar",
+  "download_cv": "Download CV",
+  "cv_versions": "CV versions to download",
+  "download_pdf": "Download CV as PDF (Spanish)",
+  "download_word": "Download CV - ATS as Word (Spanish)"
 }

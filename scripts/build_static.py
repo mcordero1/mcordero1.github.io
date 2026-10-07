@@ -31,8 +31,11 @@ def build():
     env = Environment(loader=FileSystemLoader(ROOT / 'templates'), autoescape=select_autoescape(['html']), undefined=StrictUndefined)
     (PUBLIC / 'static').mkdir(parents=True, exist_ok=True)
     (PUBLIC / 'en').mkdir(parents=True, exist_ok=True)
-    for name in ('style.css', 'favicon.svg', 'preferences.js', 'preferences.css', 'scheduling.css', 'reveal.js'):
+    for name in ('style.css', 'favicon.svg', 'preferences.js', 'preferences.css', 'scheduling.css', 'reveal.js', 'downloads.css'):
         copyfile(ROOT / 'static' / name, PUBLIC / 'static' / name)
+    (PUBLIC / 'downloads').mkdir(parents=True, exist_ok=True)
+    for name in ('CV-Marcos-Cordero.pdf', 'CV-Marcos-Cordero-ATS.docx'):
+        copyfile(ROOT / 'downloads' / name, PUBLIC / 'downloads' / name)
     pages = []
     for language in ('es', 'en'):
         english = language == 'en'
@@ -41,6 +44,7 @@ def build():
         rendered = env.get_template('profile.html').render(
             profile=profile, **locale_context(language, '../?v=2' if english else './en/?v=2'),
             asset_prefix='../static' if english else './static',
+            download_prefix='../downloads' if english else './downloads',
             site_url=SITE_URL + ('en/' if english else ''),
             alternate_urls={'es': SITE_URL, 'en': SITE_URL + 'en/', 'x-default': SITE_URL},
         )

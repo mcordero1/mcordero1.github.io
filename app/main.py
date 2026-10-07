@@ -20,6 +20,7 @@ def create_app(database_url: str | None = None) -> FastAPI:
     app = FastAPI(title="Perfil profesional — Marcos Cordero Tenreyro", version="0.1.0", lifespan=lifespan)
     app.include_router(router)
     app.mount("/static", StaticFiles(directory=ROOT / "static"), name="static")
+    app.mount("/downloads", StaticFiles(directory=ROOT / "downloads"), name="downloads")
 
     @app.middleware("http")
     async def security_headers(request, call_next):
