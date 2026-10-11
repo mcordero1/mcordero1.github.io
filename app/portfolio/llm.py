@@ -247,3 +247,54 @@ def is_llm_available() -> bool:
     if provider == "gemini":
         return bool(os.getenv("GEMINI_API_KEY"))
     return False
+
+
+async def parse_pdf_with_llm(raw_text: str) -> list[dict]:
+    """
+    Usa Gemini Flash para extraer posiciones del texto de un PDF.
+
+    Llama al modelo con temperatura 0 (determinístico) y espera
+    una respuesta JSON con la lista de posiciones.
+
+    Retorna lista de dicts con los campos de Position, o [] si falla.
+    """
+    import json as _json
+
+    if not is_llm_available():
+        logger.warning("LLM no disponible para parseo de PDF.")
+        return []
+
+    from app.portfolio.prompts import SYSTEM_PROMPT_PARSER, build_pdf_parse_prompt
+
+    try:
+        llm = get_llm_client()
+        user_prompt = build_pdf_parse_prompt(raw_text)
+
+        response_text = await llm.complete(
+            system_prompt=SYSTEM_PROMPT_PARSER,
+            user_prompt=user_prompt,
+            model="gemini-1.5-flash",
+            max_tokens=2048,
+        )
+
+        # Limpiar la respuesta: a veces Gemini agrega ```json ... ```
+        cleaned = response_text.strip()
+        if cleaned.startswith("```"):
+            # Remover bloque de código markdown
+            lines = cleaned.split("\n")
+            cleaned = "\n".join(
+                line for line in lines
+                if not line.strip().startswith("```")
+            )
+
+        data = _json.loads(cleaned)
+        positions = data.get("positions", [])
+        logger.info("Gemini extrajo %d posiciones del PDF.", len(positions))
+        return positions
+
+    except _json.JSONDecodeError as exc:
+        logger.error("Gemini retornó JSON inválido al parsear PDF: %s", exc)
+        return []
+    except Exception as exc:
+        logger.error("Error al parsear PDF con LLM: %s", exc)
+        return []

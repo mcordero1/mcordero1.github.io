@@ -117,7 +117,7 @@ async def upload_portfolio(request: Request, file: UploadFile):
             detail=f"El archivo supera el límite de {MAX_FILE_SIZE_BYTES // (1024*1024)} MB.",
         )
 
-    result = parse_file(file_bytes, filename)
+    result = await parse_file(file_bytes, filename)
     return result
 
 
@@ -433,3 +433,36 @@ def _detect_what_if_question(message: str) -> str | None:
     if matches:
         return matches[0]
     return None
+
+
+# ---------------------------------------------------------------------------
+# Endpoint de debug — solo para desarrollo local, remover antes de producción
+# ---------------------------------------------------------------------------
+
+@router.post("/debug-pdf")
+async def debug_pdf(file: UploadFile):
+    """Muestra la estructura raw que extrae pdfplumber del PDF."""
+    import pdfplumber
+    import io
+
+    file_bytes = await file.read()
+    result = {"pages": []}
+
+    with pdfplumber.open(io.BytesIO(file_bytes)) as pdf:
+        for i, page in enumerate(pdf.pages):
+            page_text = page.extract_text() or ""
+            tables = page.extract_tables()
+            page_data = {
+                "page": i + 1,
+                "text_preview": page_text[:500],
+                "tables": []
+            }
+            for j, table in enumerate(tables):
+                page_data["tables"].append({
+                    "table_index": j,
+                    "rows": len(table) if table else 0,
+                    "first_5_rows": table[:5] if table else []
+                })
+            result["pages"].append(page_data)
+
+    return result

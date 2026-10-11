@@ -245,3 +245,57 @@ Explain this result in 2–3 paragraphs, interpreting what this means for the po
 Incorporar {new_ticker} {direction_es} la volatilidad del portfolio.
 
 Explicá este resultado en 2–3 párrafos, interpretando qué significa para el perfil de riesgo del portfolio. NO recomiendes si comprar o no."""
+
+
+# ---------------------------------------------------------------------------
+# Prompt para parseo de PDF vía LLM (Gemini Flash)
+# ---------------------------------------------------------------------------
+
+SYSTEM_PROMPT_PARSER = """Sos un extractor de datos financieros. Tu única tarea es leer texto de un reporte de cartera de inversión y extraer las posiciones en formato JSON estructurado.
+
+REGLAS ESTRICTAS:
+- Respondé ÚNICAMENTE con un objeto JSON válido. Sin texto adicional, sin explicaciones, sin markdown.
+- Si no encontrás posiciones, respondé: {"positions": []}
+- Ignorá filas de totales, subtotales, headers y metadatos.
+- Cada posición debe tener al menos ticker y quantity.
+- Para campos que no estén disponibles en el texto, usá null.
+
+CAMPOS DE CADA POSICIÓN:
+- ticker: string (símbolo del activo, ej: "YPFD", "AL30", "SPY")
+- name: string o null (nombre/descripción del activo)
+- quantity: number (cantidad de unidades/nominales)
+- currency: string ("ARS", "USD", u otra moneda detectada)
+- market_price: number o null (precio/cotización actual)
+- market_value: number o null (valuación total de la posición)
+- asset_type: string o null ("equity", "bond", "etf", "cash", "cedear", "fci")
+
+EJEMPLOS DE MAPEO:
+- "Acciones" → asset_type: "equity"
+- "Obligaciones Negociables" → asset_type: "bond"
+- "Títulos Públicos" → asset_type: "bond"
+- "CEDEARs" → asset_type: "cedear"
+- "FCI" / "Fondos" → asset_type: "fci"
+- "Liquidez" / "Saldos" → asset_type: "cash"
+- ARS / Pesos → currency: "ARS"
+- USD / USDC / U$S / Dólar → currency: "USD"
+
+FORMATO DE RESPUESTA:
+{"positions": [{"ticker": "YPFD", "name": "YPF S.A.", "quantity": 360, "currency": "ARS", "market_price": 8095.0, "market_value": 2914200.0, "asset_type": "equity"}, ...]}
+"""
+
+
+def build_pdf_parse_prompt(raw_text: str) -> str:
+    """Construye el prompt para que Gemini extraiga posiciones del texto del PDF."""
+    # Limitar el texto a 8000 caracteres para no exceder el contexto de Flash
+    truncated = raw_text[:8000]
+    if len(raw_text) > 8000:
+        truncated += "\n[texto truncado...]"
+
+    return f"""Extraé todas las posiciones de inversión del siguiente texto de reporte de cartera.
+
+TEXTO DEL REPORTE:
+---
+{truncated}
+---
+
+Respondé SOLO con el JSON de posiciones."""

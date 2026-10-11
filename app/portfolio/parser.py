@@ -5,8 +5,8 @@ Flujo:
   1. Detectar formato por tipo MIME / extensión.
   2. Extraer filas candidatas usando la librería específica.
   3. Mapear columnas a la estructura Position normalizada.
-  4. Si el PDF no tiene tablas estructuradas, delegar al LLM (Gemini Flash)
-     para extraer posiciones de texto libre.
+  4. Para PDFs con secciones separadas (ej. Centaurus), parsear cada
+     sección individualmente acumulando posiciones.
 """
 
 from __future__ import annotations
@@ -14,6 +14,7 @@ from __future__ import annotations
 import csv
 import io
 import logging
+import re
 from typing import Any
 
 import pdfplumber
@@ -31,6 +32,8 @@ _COL_MAP: dict[str, str] = {
     # ticker / instrumento
     "ticker": "ticker",
     "symbol": "ticker",
+    "símbolo": "ticker",
+    "simbolo": "ticker",
     "especie": "ticker",
     "instrumento": "ticker",
     "activo": "ticker",
@@ -41,6 +44,8 @@ _COL_MAP: dict[str, str] = {
     # nombre
     "name": "name",
     "nombre": "name",
+    "denominación": "name",
+    "denominacion": "name",
     "description": "name",
     "descripción": "name",
     "descripcion": "name",
@@ -51,9 +56,12 @@ _COL_MAP: dict[str, str] = {
     "shares": "quantity",
     "unidades": "quantity",
     "nominal": "quantity",
+    "total tenencia": "quantity",
     # precio de mercado
     "price": "market_price",
     "precio": "market_price",
+    "cotización": "market_price",
+    "cotizacion": "market_price",
     "market price": "market_price",
     "precio de mercado": "market_price",
     "last price": "market_price",
@@ -83,10 +91,34 @@ _COL_MAP: dict[str, str] = {
     # valor de mercado
     "market value": "market_value",
     "valor": "market_value",
+    "importe": "market_value",
     "mtm": "market_value",
     "valuación": "market_value",
     "valuation": "market_value",
 }
+
+# Secciones del PDF de Centaurus y su tipo de activo
+_SECTION_ASSET_TYPES: dict[str, str] = {
+    "acciones": "equity",
+    "obligaciones negociables": "bond",
+    "títulos públicos": "bond",
+    "titulos publicos": "bond",
+    "fondos": "fci",
+    "fci": "fci",
+    "cedears": "cedear",
+    "letras": "bond",
+    "bonos": "bond",
+    "liquidez": "cash",
+    "saldos monetarios": "cash",
+}
+
+# Filas a ignorar en el PDF de Centaurus (subtotales, monedas, etc.)
+_SKIP_ROW_PATTERNS = re.compile(
+    r"^(total|subtotal|pesos arg|dólar|dolar|dollar|subtotales|hoja|"
+    r"ars|usd|usdc|usdm|cuenta comitente|denominación|símbolo|simbolo|"
+    r"tenencia|valuación|fecha|tipo de cambio|% s/activo)$",
+    re.IGNORECASE,
+)
 
 
 def _normalize_header(header: str) -> str:
@@ -105,43 +137,86 @@ def _map_columns(headers: list[str]) -> dict[int, str]:
     return mapping
 
 
-def _row_to_position(row: list[Any], col_map: dict[int, str]) -> Position | None:
-    """Convierte una fila de datos a Position. Retorna None si no hay ticker."""
+def _clean_number(raw: str) -> float | None:
+    """Convierte strings numéricos con formato argentino/internacional a float."""
+    if not raw:
+        return None
+    # Quitar símbolos de moneda y espacios
+    cleaned = raw.replace("$", "").replace("U$S", "").replace("U$S C", "").strip()
+    cleaned = cleaned.replace("%", "").strip()
+    # Formato argentino: 1.234.567,89 → 1234567.89
+    if "," in cleaned and "." in cleaned:
+        # Si la coma viene después del punto, es separador decimal argentino
+        if cleaned.rindex(",") > cleaned.rindex("."):
+            cleaned = cleaned.replace(".", "").replace(",", ".")
+        else:
+            cleaned = cleaned.replace(",", "")
+    elif "," in cleaned:
+        cleaned = cleaned.replace(",", ".")
+    try:
+        return float(cleaned)
+    except (ValueError, TypeError):
+        return None
+
+
+def _row_to_position(
+    row: list[Any],
+    col_map: dict[int, str],
+    default_asset_type: str | None = None,
+    default_currency: str | None = None,
+) -> Position | None:
+    """Convierte una fila de datos a Position. Retorna None si no hay ticker válido."""
     data: dict[str, Any] = {}
     for idx, field in col_map.items():
         if idx < len(row):
             val = row[idx]
-            if val is not None and str(val).strip() != "":
+            if val is not None and str(val).strip() not in ("", "—", "-"):
                 data[field] = str(val).strip()
 
     ticker = data.get("ticker")
     if not ticker:
         return None
-    ticker = ticker.upper().replace(" ", "")
 
-    def _float(key: str) -> float | None:
-        try:
-            raw = data.get(key)
-            if raw is None:
-                return None
-            return float(str(raw).replace(",", ".").replace("$", "").replace("%", "").strip())
-        except (ValueError, TypeError):
-            return None
+    # Limpiar ticker
+    ticker = ticker.upper().strip()
+    # Ignorar filas que son subtotales o headers repetidos
+    if _SKIP_ROW_PATTERNS.match(ticker):
+        return None
+    # Ignorar tickers muy largos (probablemente texto de descripción)
+    if len(ticker) > 15:
+        return None
 
-    quantity = _float("quantity")
+    ticker = ticker.replace(" ", "")
+
+    quantity = _clean_number(data.get("quantity", ""))
     if quantity is None or quantity == 0:
         return None
+
+    # Detectar moneda: del campo moneda o del default de la sección
+    raw_currency = data.get("currency") or default_currency or "USD"
+    currency = raw_currency.upper().strip()
+    # Normalizar monedas del mercado local
+    currency_map = {
+        "ARS": "ARS", "PESOS": "ARS", "$": "ARS",
+        "USD": "USD", "USDC": "USD", "USDM": "USD",
+        "U$S": "USD", "U$S C": "USD",
+    }
+    currency = currency_map.get(currency, currency)
+
+    market_price = _clean_number(data.get("market_price", ""))
+    market_value = _clean_number(data.get("market_value", ""))
+    avg_cost = _clean_number(data.get("avg_cost", ""))
 
     return Position(
         ticker=ticker,
         name=data.get("name"),
         quantity=quantity,
-        currency=(data.get("currency") or "USD").upper().strip(),
-        market_price=_float("market_price"),
-        avg_cost=_float("avg_cost"),
-        asset_type=data.get("asset_type"),
+        currency=currency,
+        market_price=market_price,
+        avg_cost=avg_cost,
+        asset_type=default_asset_type or data.get("asset_type"),
         sector=data.get("sector"),
-        market_value=_float("market_value"),
+        market_value=market_value,
     )
 
 
@@ -166,73 +241,83 @@ def _detect_base_currency(positions: list[Position]) -> str:
     return max(counts, key=lambda k: counts[k]) if counts else "USD"
 
 
+def _is_header_row(row: list[Any]) -> bool:
+    """Detecta si una fila es una fila de headers (contiene columnas conocidas)."""
+    cells = [str(c or "").strip().lower() for c in row]
+    matches = sum(1 for c in cells if c in _COL_MAP)
+    return matches >= 2
+
+
+def _detect_section_type(text: str) -> str | None:
+    """Detecta el tipo de activo a partir del texto de una sección."""
+    text_lower = text.lower().strip()
+    for key, asset_type in _SECTION_ASSET_TYPES.items():
+        if key in text_lower:
+            return asset_type
+    return None
+
+
 # ---------------------------------------------------------------------------
-# Parsers por formato
+# Parser PDF — estrategia multi-sección
 # ---------------------------------------------------------------------------
 
-def parse_pdf(file_bytes: bytes) -> UploadResult:
-    """Extrae posiciones de un PDF usando pdfplumber. Busca tablas estructuradas."""
+async def parse_pdf(file_bytes: bytes) -> UploadResult:
+    """
+    Extrae posiciones de un PDF usando pdfplumber.
+
+    Estrategia adaptada al formato real de los PDFs de brokers argentinos
+    (Centaurus y similares), donde pdfplumber extrae cada fila como una
+    sola celda de texto en lugar de columnas separadas.
+
+    Orden de intentos:
+    1. Parseo por texto con regex (formato Centaurus/brokers AR).
+    2. Tabla estructurada con columnas separadas (brokers internacionales).
+    3. Mensaje de error con sugerencia de usar CSV/Excel.
+    """
     warnings: list[UploadWarning] = []
-    all_rows: list[list[Any]] = []
-    headers: list[str] = []
 
-    with pdfplumber.open(io.BytesIO(file_bytes)) as pdf:
-        for page in pdf.pages:
-            tables = page.extract_tables()
-            for table in tables:
-                if not table or len(table) < 2:
-                    continue
-                if not headers:
-                    # Primera fila con contenido como headers
-                    candidate = [str(c or "").strip() for c in table[0]]
-                    if any(_normalize_header(c) in _COL_MAP for c in candidate):
-                        headers = candidate
-                        all_rows.extend(table[1:])
-                    else:
-                        # Intentar segunda fila como headers
-                        if len(table) > 2:
-                            candidate2 = [str(c or "").strip() for c in table[1]]
-                            if any(_normalize_header(c) in _COL_MAP for c in candidate2):
-                                headers = candidate2
-                                all_rows.extend(table[2:])
-                else:
-                    all_rows.extend(table[1:])  # mismo esquema, continuar
+    # Extraer todo el texto del PDF
+    full_text = _extract_pdf_text(file_bytes)
 
-    if not headers:
+    if not full_text.strip():
         warnings.append(UploadWarning(
             field="file",
-            message=(
-                "No se detectaron tablas estructuradas en el PDF. "
-                "El análisis con IA intentará extraer las posiciones del texto."
-            ),
+            message="No se pudo extraer texto del PDF. El archivo puede estar escaneado o protegido.",
         ))
-        # Intentar texto plano como fallback
-        raw_text = _extract_pdf_text(file_bytes)
-        return UploadResult(
-            positions=[],
-            warnings=warnings,
-            base_currency="USD",
-        )
+        return UploadResult(positions=[], warnings=warnings, base_currency="USD")
 
-    col_map = _map_columns(headers)
-    if "ticker" not in col_map.values():
-        warnings.append(UploadWarning(
-            field="ticker",
-            message="No se encontró columna de ticker/instrumento. Revisá los encabezados del archivo.",
-        ))
-        return UploadResult(positions=[], warnings=warnings)
+    # Estrategia 1: parseo por texto (funciona con Centaurus y brokers AR)
+    positions = _parse_pdf_by_text(full_text)
 
-    positions: list[Position] = []
-    for row in all_rows:
-        pos = _row_to_position(row, col_map)
-        if pos:
-            positions.append(pos)
+    # Estrategia 2: tablas con columnas separadas (brokers internacionales)
+    if not positions:
+        positions = _parse_pdf_by_tables(file_bytes)
+
+    # Estrategia 3: fallback a Gemini Flash si las dos anteriores fallaron
+    if not positions:
+        logger.info("Intentando parseo de PDF con Gemini Flash...")
+        from app.portfolio.llm import parse_pdf_with_llm
+        raw_dicts = await parse_pdf_with_llm(full_text)
+        positions = _dict_list_to_positions(raw_dicts)
+        if positions:
+            warnings.append(UploadWarning(
+                field="file",
+                message=(
+                    "Las posiciones fueron extraídas mediante IA "
+                    "(el formato del PDF no es estándar). "
+                    "Verificá que los datos sean correctos antes de analizar."
+                ),
+            ))
 
     if not positions:
         warnings.append(UploadWarning(
             field="file",
-            message="El PDF tiene tablas pero no se pudo extraer ninguna posición válida.",
+            message=(
+                "No se pudieron extraer posiciones del PDF. "
+                "Intentá exportar desde tu broker como CSV o Excel para mejor compatibilidad."
+            ),
         ))
+        return UploadResult(positions=[], warnings=warnings, base_currency="USD")
 
     positions = _normalize_weights(positions)
     return UploadResult(
@@ -240,6 +325,56 @@ def parse_pdf(file_bytes: bytes) -> UploadResult:
         warnings=warnings,
         base_currency=_detect_base_currency(positions),
     )
+
+
+def _dict_list_to_positions(raw: list[dict]) -> list[Position]:
+    """Convierte la lista de dicts retornada por Gemini a objetos Position."""
+    positions: list[Position] = []
+    seen: set[str] = set()
+
+    for item in raw:
+        ticker = str(item.get("ticker") or "").upper().strip()
+        if not ticker or ticker in seen:
+            continue
+
+        # Ignorar filas que claramente no son posiciones
+        if _SKIP_ROW_PATTERNS.match(ticker):
+            continue
+
+        try:
+            qty = float(item.get("quantity") or 0)
+        except (ValueError, TypeError):
+            continue
+
+        if qty <= 0:
+            continue
+
+        def _safe_float(val) -> float | None:
+            try:
+                return float(val) if val is not None else None
+            except (ValueError, TypeError):
+                return None
+
+        currency_raw = str(item.get("currency") or "USD").upper().strip()
+        currency_map = {
+            "ARS": "ARS", "PESOS": "ARS",
+            "USD": "USD", "USDC": "USD", "USDM": "USD",
+            "U$S": "USD", "U$S C": "USD",
+        }
+        currency = currency_map.get(currency_raw, "USD")
+
+        positions.append(Position(
+            ticker=ticker,
+            name=str(item.get("name") or "")[:100] or None,
+            quantity=qty,
+            currency=currency,
+            market_price=_safe_float(item.get("market_price")),
+            market_value=_safe_float(item.get("market_value")),
+            asset_type=item.get("asset_type"),
+        ))
+        seen.add(ticker)
+
+    return positions
 
 
 def _extract_pdf_text(file_bytes: bytes) -> str:
@@ -251,6 +386,179 @@ def _extract_pdf_text(file_bytes: bytes) -> str:
             if t:
                 text_parts.append(t)
     return "\n".join(text_parts)
+
+
+def _parse_pdf_by_text(full_text: str) -> list[Position]:
+    """
+    Parsea el texto completo del PDF buscando líneas de posiciones.
+
+    Formato Centaurus (cada línea de posición tiene la estructura):
+    TICKER  DESCRIPCION  CANTIDAD  MONEDA  COTIZACION  IMPORTE  ...
+
+    Ejemplo real:
+    "YPFD YPF S.A. "D" ESCRITURALES 360 ARS $ 8.095,0000 $ 2.914.200,00 $ 1,00 ..."
+    "YMCJO ON YPF S.A. REGS 1,5% V.30/09/2033 1.255 USDC U$S C 0,9751 ..."
+    "BPOB7 BOPREAL S. 1 B VTO31/10/27 U$S CG 1.360 USD U$S 1,0414 ..."
+    """
+    positions: list[Position] = []
+    lines = full_text.split("\n")
+
+    # Detectar sección actual para asignar asset_type
+    current_asset_type: str | None = None
+    current_currency: str = "USD"
+
+    # Tickers ya detectados para evitar duplicados
+    seen_tickers: set[str] = set()
+
+    for line in lines:
+        line = line.strip()
+        if not line:
+            continue
+
+        # Detectar cambio de sección
+        line_lower = line.lower()
+        for key, atype in _SECTION_ASSET_TYPES.items():
+            if key in line_lower:
+                current_asset_type = atype
+                break
+
+        # Detectar cambio de moneda de sección
+        if re.search(r'pesos?\s+arg', line_lower):
+            current_currency = "ARS"
+        elif re.search(r'dólar|dolar|dollar', line_lower):
+            current_currency = "USD"
+
+        # Intentar extraer posición de la línea
+        pos = _extract_position_from_line(line, current_asset_type, current_currency)
+        if pos and pos.ticker not in seen_tickers:
+            positions.append(pos)
+            seen_tickers.add(pos.ticker)
+
+    return positions
+
+
+# Regex para detectar una línea de posición:
+# - Empieza con un ticker (2-8 letras/números mayúsculas)
+# - Seguido de descripción
+# - Contiene un número que puede ser la cantidad
+_POSITION_LINE_RE = re.compile(
+    r'^([A-Z0-9]{2,8})\s+'           # ticker
+    r'(.+?)\s+'                        # descripción (non-greedy)
+    r'([\d\.]+(?:[\.,]\d+)?)\s+'      # cantidad
+    r'(ARS|USD|USDC|USDM|U\$S\s*C?G?)\s+',  # moneda
+    re.IGNORECASE
+)
+
+# Números con formato argentino o internacional
+_NUMBER_RE = re.compile(r'\$?\s*([\d\.]+(?:,\d+)?)')
+
+
+def _extract_position_from_line(
+    line: str,
+    asset_type: str | None,
+    default_currency: str,
+) -> Position | None:
+    """
+    Intenta extraer una posición de una línea de texto del PDF.
+    Maneja el formato específico de Centaurus.
+    """
+    # Ignorar líneas que son claramente headers, totales o metadatos
+    skip_patterns = [
+        r'^(total|subtotal|hoja|tenencia|valuación|símbolo|simbolo|fecha|'
+        r'denominación|denominacion|liquidez|acciones|obligaciones|títulos|titulos|'
+        r'saldos|dólar|dolar|pesos|ars|usd|alyc|cuenta|jueves|lunes|martes|'
+        r'miércoles|miercoles|viernes|sábado|sabado|domingo)',
+        r'^\d{1,2}/\d{1,2}/\d{4}',  # fechas
+        r'^[\$\d\s\.,\%]+$',          # solo números
+    ]
+    line_lower = line.lower().strip()
+    for pattern in skip_patterns:
+        if re.match(pattern, line_lower):
+            return None
+
+    # Intentar match con el regex de posición
+    m = _POSITION_LINE_RE.match(line)
+    if not m:
+        return None
+
+    ticker = m.group(1).upper().strip()
+    name = m.group(2).strip()
+    qty_str = m.group(3)
+    currency_raw = m.group(4).strip().upper()
+
+    # Ignorar tickers que son palabras comunes
+    common_words = {"ARS", "USD", "TOTAL", "HOJA", "FECHA", "TIPO"}
+    if ticker in common_words:
+        return None
+
+    quantity = _clean_number(qty_str)
+    if not quantity or quantity <= 0:
+        return None
+
+    # Normalizar moneda
+    currency_map = {
+        "ARS": "ARS",
+        "USD": "USD",
+        "USDC": "USD",
+        "USDM": "USD",
+        "U$S": "USD",
+        "U$S C": "USD",
+        "U$S CG": "USD",
+    }
+    currency = currency_map.get(currency_raw, default_currency)
+
+    # Intentar extraer cotización — buscar el primer número después de la moneda
+    rest = line[m.end():]
+    numbers = _NUMBER_RE.findall(rest)
+    market_price = _clean_number(numbers[0]) if numbers else None
+
+    # Intentar extraer market_value — buscar número más grande en la línea
+    all_numbers = [_clean_number(n) for n in _NUMBER_RE.findall(line)]
+    all_numbers = [n for n in all_numbers if n and n > quantity]
+    market_value = max(all_numbers) if all_numbers else None
+
+    return Position(
+        ticker=ticker,
+        name=name[:100] if name else None,
+        quantity=quantity,
+        currency=currency,
+        market_price=market_price,
+        market_value=market_value,
+        asset_type=asset_type,
+    )
+
+
+def _parse_pdf_by_tables(file_bytes: bytes) -> list[Position]:
+    """
+    Fallback: intenta extraer posiciones de tablas con columnas separadas.
+    Funciona con PDFs de brokers internacionales donde pdfplumber
+    extrae columnas correctamente.
+    """
+    positions: list[Position] = []
+    seen_tickers: set[str] = set()
+
+    with pdfplumber.open(io.BytesIO(file_bytes)) as pdf:
+        for page in pdf.pages:
+            tables = page.extract_tables()
+            for table in tables:
+                if not table or len(table) < 2:
+                    continue
+                # Buscar fila de headers con más de 1 columna
+                for i, row in enumerate(table):
+                    if len(row) > 1 and _is_header_row(row):
+                        col_map = _map_columns([str(c or "").strip() for c in row])
+                        if "ticker" not in col_map.values():
+                            continue
+                        for data_row in table[i + 1:]:
+                            if len(data_row) < 2:
+                                continue
+                            pos = _row_to_position(data_row, col_map)
+                            if pos and pos.ticker not in seen_tickers:
+                                positions.append(pos)
+                                seen_tickers.add(pos.ticker)
+                        break
+
+    return positions
 
 
 def parse_excel(file_bytes: bytes) -> UploadResult:
@@ -373,12 +681,12 @@ def parse_csv(file_bytes: bytes) -> UploadResult:
 # Dispatcher principal
 # ---------------------------------------------------------------------------
 
-def parse_file(file_bytes: bytes, filename: str) -> UploadResult:
+async def parse_file(file_bytes: bytes, filename: str) -> UploadResult:
     """Detecta el formato por extensión y delega al parser correspondiente."""
     ext = filename.rsplit(".", 1)[-1].lower() if "." in filename else ""
 
     if ext == "pdf":
-        return parse_pdf(file_bytes)
+        return await parse_pdf(file_bytes)
     elif ext in {"xlsx", "xls"}:
         return parse_excel(file_bytes)
     elif ext == "csv":
