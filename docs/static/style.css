@@ -6,6 +6,53 @@
 @media(max-width:700px){html{scroll-padding-top:120px}.wrap,.nav-wrap{width:calc(100% - 40px)}.nav-wrap{gap:18px;min-height:74px}.brand-mark{font-size:25px}.header nav{gap:16px;font-size:11px}.header .nav-contact{border:0;padding:0}.nav-contact span{display:none}.hero{display:block;padding-block:45px}.hero .eyebrow{font-size:9px;gap:8px}.hero .eyebrow .muted{display:none}.hero .eyebrow{max-width:310px}h1{font-size:50px;letter-spacing:-2.7px;max-width:440px}.role{font-size:20px}.role>span:last-child{font-size:14px}.intro{font-size:16px;line-height:1.8}.hero-actions{gap:24px}.button{font-size:12px;padding:12px 16px;gap:15px}.focus-panel{margin-top:38px}.focus-row{padding:19px 21px}.focus-row h2{font-size:14px}.focus-row p{font-size:12px}.panel-top{padding-block:16px}.panel-bottom{padding-block:14px}.market-strip>.wrap{gap:13px;font-size:8px;letter-spacing:1.1px;justify-content:space-between;min-height:54px}.market-strip .strip-note{display:none}.section{padding-block:52px}.section-grid{display:block}.section-heading{margin-bottom:30px}h2{font-size:29px}.prose{font-size:15px}.section-title-row{margin-bottom:29px}.job{display:block;padding-left:22px;border-left:1px solid var(--line);margin-left:3px}.job-period{padding:24px 0 0;font-size:10px}.job-period:before{display:none}.timeline-dot{left:-26px;top:30px}.job-content{border:0!important;padding:13px 0 27px}.job:not(:last-child) .job-content{border-bottom:1px solid var(--line)!important}.company{font-size:11px}.job h3{font-size:21px}.job-description,.highlights{font-size:14px}.skill-groups{grid-template-columns:1fr;gap:30px}.skill-group h3{font-size:18px}.skill-group li{font-size:12px}.languages{margin-top:27px}.education-list{margin-top:35px}.contact{display:block;padding-block:52px}.contact h2{font-size:33px}.contact-actions{margin-top:28px;min-width:0}.footer{font-size:9px;flex-wrap:wrap;line-height:1.8}.footer span:first-child{width:100%}.footer a{margin-left:auto}}
 @media(max-width:360px){.header nav{gap:10px}.wrap,.nav-wrap{width:calc(100% - 32px)}h1{font-size:44px}.hero-actions{gap:16px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+/* Profile readability: keep the agent's component styles independent. */
+@media screen {
+  .header nav {font-size:16px;gap:30px}
+  .header nav a {min-height:44px;display:inline-flex;align-items:center;white-space:nowrap}
+  .intro,.prose {font-size:18px;line-height:1.75}
+  .role>span:last-child {font-size:16px;white-space:normal}
+  .hero-actions .button,.text-link {font-size:15px}
+  .focus-row {gap:14px}
+  .focus-row>div {min-width:0}
+  .focus-row h2 {font-size:17px}
+  .focus-row p {font-size:14px;line-height:1.6}
+  .focus-symbol {width:28px;height:28px;flex:0 0 28px;color:var(--accent);margin-left:auto}
+  .panel-top {font-size:11px}
+  .panel-bottom {font-size:10px;letter-spacing:.6px;gap:12px}
+  .eyebrow,.section-caption {font-size:11px}
+  .job-period {font-size:13px}
+  .company {font-size:14px}
+  .job-description,.highlights {font-size:16px;line-height:1.75}
+  summary {font-size:15px;padding-block:10px}
+  .skill-group li {font-size:14px;padding:5px 11px}
+  .languages p,.education-list p {font-size:16px}
+  .languages h3,.education-list .courses-title {font-size:12px}
+  .education-list h3,.education-list h4 {font-size:18px}
+  .education-list .course h4 {font-size:16px}
+  .contact p:not(.eyebrow),.contact-actions .button {font-size:16px}
+  .contact-email {font-size:15px}
+  .footer {font-size:12px}
+}
+@media screen and (max-width:1050px) {
+  .header nav {gap:22px}
+  .header .nav-contact {padding-left:20px}
+  .hero {grid-template-columns:1.35fr 1fr;gap:28px}
+  .focus-row {padding-inline:18px;gap:10px}
+}
+@media screen and (max-width:700px) {
+  html {scroll-padding-top:170px}
+  .nav-wrap {flex-direction:column;gap:8px;padding-block:14px 8px}
+  .header nav {width:100%;justify-content:center;flex-wrap:wrap;gap:0 20px;font-size:15px}
+  .header .nav-contact {padding:0}
+  .hero .eyebrow {font-size:11px}
+  .intro,.prose {font-size:17px}
+  .hero-actions {flex-wrap:wrap;gap:16px 24px}
+  .focus-row {padding:21px 18px;gap:12px}
+  .panel-top,.panel-bottom {padding-inline:18px}
+  .footer {font-size:12px}
+}
+
 @media print{:root{--fg:#111;--bg:#fff;--soft:#333;--accent:#194d37;--line:#ddd;color-scheme:light}body{font-size:11pt}.header,.focus-panel,.hero-actions,.market-strip,.contact,.footer,.skip,summary{display:none}.wrap{width:100%}.hero,.section{padding-block:20px}.hero{display:block}h1{font-size:32pt}.hero:before{display:none}.section-grid{display:block}.skill-groups{gap:20px}.skills-band{background:none}.job{grid-template-columns:150px 1fr;break-inside:avoid}.job-period:before{display:none}.section-heading{margin-bottom:15px}.languages{margin-top:15px}h2{font-size:20pt}.job h3{font-size:16pt}.skill-group li{color:#333}.highlights{font-size:10pt}details::details-content{content-visibility:visible!important;height:auto!important}.contact-email{display:block}}
 
 

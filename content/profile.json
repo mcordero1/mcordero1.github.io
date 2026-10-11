@@ -74,13 +74,13 @@
     }
   ],
   "education": [
-    {"title": "Contador Público", "institution": "Universidad Católica Argentina · UCA"},
     {"title": "Product Manager", "institution": "Academia Kinetic Training"},
+    {"title": "Blockchain, Criptomonedas y DeFi", "institution": "ITBA"},
     {"title": "Full Stack Engineer Developer", "institution": "Educación IT"},
-    {"title": "SQL Server Management · Fundamentos", "institution": "Educación IT"}
+    {"title": "SQL Server Management · Fundamentos", "institution": "Educación IT"},
+    {"title": "Contador Público", "institution": "Universidad Católica Argentina · UCA"}
   ],
   "courses": [
-    {"title": "Blockchain, Criptomonedas y DeFi", "institution": "ITBA"},
     {"title": "Análisis Técnico", "institution": "Academia Rubén J. Ullúa"},
     {"title": "Análisis Elliot Wave", "institution": "Academia Rubén J. Ullúa"}
   ],
