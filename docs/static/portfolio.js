@@ -323,10 +323,7 @@
         { key: "name", val: pos.name || "—" },
         { key: "quantity", val: pos.quantity != null ? pos.quantity : "—" },
         { key: "market_price", val: pos.market_price != null ? pos.market_price : "—" },
-        { key: "avg_cost", val: pos.avg_cost != null ? pos.avg_cost : "—" },
         { key: "currency", val: pos.currency || "USD" },
-        { key: "asset_type", val: pos.asset_type || "—" },
-        { key: "sector", val: pos.sector || "—" },
       ];
 
       fields.forEach(({ key, val }) => {

@@ -71,8 +71,8 @@
       <div class="ph-header">
         <div>
           <p class="eyebrow index">06 / PORTFOLIO HEALTH</p>
-          <h2 id="ph-title">Analizá tu cartera<br>con inteligencia artificial.</h2>
-          <p class="ph-subtitle">Subí tu cartera (PDF, Excel o CSV) y obtené un diagnóstico instantáneo: Health Score, volatilidad Markowitz, concentración sectorial, correlación entre activos y Sharpe Ratio. Después podés hacer preguntas.</p>
+          <h2 id="ph-title">Analizá tu cartera.</h2>
+          <p class="ph-subtitle">Subí tu cartera (PDF, Excel o CSV) y obtené un diagnóstico instantáneo.</p>
         </div>
         <div class="ph-lang-toggle" role="group" aria-label="Idioma del análisis">
           <button class="ph-lang-btn ph-lang-active" data-lang="es" aria-pressed="true">ES</button>
@@ -82,7 +82,7 @@
 
       <div class="ph-disclaimer" role="note">
         <span class="ph-disc-icon" aria-hidden="true">⚠</span>
-        <p><strong>Aviso legal:</strong> El análisis generado por esta herramienta es exclusivamente informativo y no constituye asesoramiento, recomendación ni consejo de inversión. Consultá a un asesor financiero habilitado antes de tomar cualquier decisión. / <em>This tool provides informational analysis only and does not constitute investment advice.</em></p>
+        <p><strong>Aviso legal:</strong> El análisis generado por esta herramienta es exclusivamente informativo y no constituye asesoramiento, recomendación ni consejo de inversión. Consultá a un asesor financiero habilitado antes de tomar cualquier decisión.</p>
       </div>
 
       <!-- Zona de carga de archivos -->
@@ -115,16 +115,13 @@
                 <th scope="col">Nombre</th>
                 <th scope="col">Cantidad</th>
                 <th scope="col">Precio</th>
-                <th scope="col">PPC</th>
                 <th scope="col">Moneda</th>
-                <th scope="col">Tipo</th>
-                <th scope="col">Sector</th>
               </tr>
             </thead>
             <tbody id="ph-positions-body"></tbody>
           </table>
         </div>
-        <p class="ph-edit-hint">Podés editar los valores antes de analizar. Los campos con — no se encontraron en el archivo.</p>
+        <p class="ph-edit-hint" style="display:none"></p>
       </div>
 
       <!-- Reporte de análisis (oculto hasta analizar) -->

@@ -145,14 +145,25 @@ def _clean_number(raw: str) -> float | None:
     cleaned = raw.replace("$", "").replace("U$S", "").replace("U$S C", "").strip()
     cleaned = cleaned.replace("%", "").strip()
     # Formato argentino: 1.234.567,89 → 1234567.89
+    # Formato argentino sin decimales: 1.360 → 1360 (punto como separador de miles)
     if "," in cleaned and "." in cleaned:
-        # Si la coma viene después del punto, es separador decimal argentino
+        # Si la coma viene después del punto: es decimal argentino (1.234,56)
         if cleaned.rindex(",") > cleaned.rindex("."):
             cleaned = cleaned.replace(".", "").replace(",", ".")
         else:
             cleaned = cleaned.replace(",", "")
     elif "," in cleaned:
+        # Solo coma: puede ser decimal (1,5) o miles (1,360) — asumir decimal
         cleaned = cleaned.replace(",", ".")
+    elif "." in cleaned:
+        # Solo punto: puede ser miles (1.360) o decimal (1.5)
+        # Si hay exactamente 3 dígitos después del punto, es separador de miles
+        parts = cleaned.split(".")
+        if len(parts) == 2 and len(parts[1]) == 3 and parts[1].isdigit():
+            cleaned = cleaned.replace(".", "")
+        # Si hay múltiples puntos, todos son separadores de miles
+        elif len(parts) > 2:
+            cleaned = cleaned.replace(".", "")
     try:
         return float(cleaned)
     except (ValueError, TypeError):
