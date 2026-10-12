@@ -57,6 +57,8 @@ _COL_MAP: dict[str, str] = {
     "unidades": "quantity",
     "nominal": "quantity",
     "total tenencia": "quantity",
+    "monto moneda": "quantity",   # liquidez en brokers AR
+    "monto en moneda": "quantity",
     # precio de mercado
     "price": "market_price",
     "precio": "market_price",
@@ -95,6 +97,8 @@ _COL_MAP: dict[str, str] = {
     "mtm": "market_value",
     "valuación": "market_value",
     "valuation": "market_value",
+    "monto usd": "market_value",   # liquidez en brokers AR
+    "monto en usd": "market_value",
 }
 
 # Secciones del PDF de Centaurus y su tipo de activo
@@ -112,11 +116,14 @@ _SECTION_ASSET_TYPES: dict[str, str] = {
     "saldos monetarios": "cash",
 }
 
-# Filas a ignorar en el PDF de Centaurus (subtotales, monedas, etc.)
+# Filas a ignorar: subtotales, monedas como headers, metadatos
+# Nota: ARS y USD pueden ser tickers válidos en la sección Liquidez,
+# por eso NO están en este patrón — se filtran por contexto en _row_to_position
 _SKIP_ROW_PATTERNS = re.compile(
-    r"^(total|subtotal|pesos arg|dólar|dolar|dollar|subtotales|hoja|"
-    r"ars|usd|usdc|usdm|cuenta comitente|denominación|símbolo|simbolo|"
-    r"tenencia|valuación|fecha|tipo de cambio|% s/activo)$",
+    r"^(total|subtotal|subtotal liquidez|subtotal renta|subtotales|hoja|"
+    r"tenencia|valuación|fecha|tipo de cambio|% s/activo|"
+    r"denominación|símbolo|simbolo|cuenta comitente|"
+    r"liquidez - saldos|saldos monetarios)$",
     re.IGNORECASE,
 )
 
@@ -352,12 +359,20 @@ def _dict_list_to_positions(raw: list[dict]) -> list[Position]:
         if _SKIP_ROW_PATTERNS.match(ticker):
             continue
 
+        # Ignorar tickers de solo 1 carácter
+        if len(ticker) < 2:
+            continue
+
         try:
             qty = float(item.get("quantity") or 0)
         except (ValueError, TypeError):
             continue
 
-        if qty <= 0:
+        # Permitir cantidades negativas en cash (saldo negativo en cuenta)
+        asset_type = item.get("asset_type") or ""
+        if qty == 0:
+            continue
+        if qty < 0 and asset_type != "cash":
             continue
 
         def _safe_float(val) -> float | None:
