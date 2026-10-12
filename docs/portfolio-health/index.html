@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Portfolio Health — Analizá tu cartera de inversión con inteligencia artificial. Health Score, volatilidad Markowitz, concentración sectorial y Sharpe Ratio.">
+  <meta name="theme-color" content="#0b1012">
+  <title>Portfolio Health · Marcos Cordero</title>
+  <link rel="icon" href="../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../static/style.css">
+  <link rel="stylesheet" href="../static/preferences.css">
+  <style>
+    /* Estilos específicos de la página Portfolio Health */
+    .ph-page-hero {
+      padding-block: 64px 48px;
+      border-bottom: 1px solid var(--line);
+    }
+    .ph-page-hero .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .ph-back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font: 11px var(--mono);
+      letter-spacing: 1px;
+      color: var(--soft);
+      transition: color .15s;
+      margin-bottom: 32px;
+    }
+    .ph-back-link:hover { color: var(--accent); }
+    .ph-back-link svg { width: 14px; height: 14px; }
+    .ph-main { padding-block: 48px 80px; }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#contenido">Saltar al contenido</a>
+  <header class="header">
+    <div class="nav-wrap">
+      <a class="brand" href="../" aria-label="Volver al perfil">
+        <span class="brand-mark" aria-hidden="true">m<span>.</span>c</span>
+        <span class="brand-label">MARCOS CORDERO TENREYRO</span>
+      </a>
+      <nav aria-label="Navegación principal">
+        <a href="../">Perfil</a>
+        <a href="../#experiencia">Experiencia</a>
+        <a href="../#formacion">Formación</a>
+        <a href="./" aria-current="page" style="color:var(--accent)">Portfolio Health</a>
+        <a class="nav-contact" href="../#contacto">Contacto <span aria-hidden="true">↗</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido" class="wrap ph-main">
+    <a class="ph-back-link" href="../">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Volver al perfil
+    </a>
+
+    <section class="ph-page-hero" aria-labelledby="ph-title">
+      <p class="eyebrow">
+        <span class="status-dot" aria-hidden="true"></span>
+        PORTFOLIO HEALTH
+      </p>
+      <h1 id="ph-title">Analizá tu cartera.</h1>
+      <p style="font-size:18px;color:var(--soft);max-width:600px;margin:16px 0 0;line-height:1.75">
+        Subí tu cartera (PDF, Excel o CSV) y obtené un diagnóstico instantáneo.
+      </p>
+    </section>
+
+    <!-- Disclaimer -->
+    <div class="ph-disclaimer" role="note" style="margin-top:32px">
+      <span class="ph-disc-icon" aria-hidden="true">⚠</span>
+      <p><strong>Aviso legal:</strong> El análisis generado por esta herramienta es exclusivamente informativo y no constituye asesoramiento, recomendación ni consejo de inversión. Consultá a un asesor financiero habilitado antes de tomar cualquier decisión.</p>
+    </div>
+
+    <!-- Toggle de idioma -->
+    <div style="display:flex;justify-content:flex-end;margin-top:24px">
+      <div class="ph-lang-toggle" role="group" aria-label="Idioma del análisis">
+        <button class="ph-lang-btn ph-lang-active" data-lang="es" aria-pressed="true">ES</button>
+        <button class="ph-lang-btn" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+    </div>
+
+    <!-- Zona de upload -->
+    <div id="ph-upload-zone" class="ph-upload-zone" role="region" aria-label="Zona de carga de cartera" style="margin-top:24px">
+      <div id="ph-drop-area" class="ph-drop-area" tabindex="0" role="button" aria-label="Arrastrá o hacé clic para subir tu cartera">
+        <svg class="ph-upload-icon" aria-hidden="true" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M24 32V16M24 16L18 22M24 16L30 22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M8 36C5.8 34.4 4 31.8 4 28C4 22.5 8.5 18 14 18C14.3 18 14.6 18 14.9 18.1C16.7 13.4 21.1 10 26 10C32.6 10 38 15.4 38 22C38 22.3 38 22.6 38 22.9C41.4 23.8 44 26.9 44 30.5C44 34.6 40.6 38 36.5 38H12C10.3 38 8.9 37.3 8 36Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <p class="ph-drop-title" id="ph-drop-title">Arrastrá tu archivo aquí</p>
+        <p class="ph-drop-sub" id="ph-drop-sub">o hacé clic para seleccionar · PDF, Excel (.xlsx) o CSV · máx. 10 MB</p>
+        <input type="file" id="ph-file-input" accept=".pdf,.xlsx,.xls,.csv" aria-label="Seleccionar archivo de cartera" hidden>
+      </div>
+    </div>
+
+    <!-- Tabla de posiciones -->
+    <div id="ph-positions-zone" class="ph-hidden" role="region" aria-label="Posiciones detectadas">
+      <div class="ph-positions-header">
+        <h3 id="ph-positions-title">Posiciones detectadas</h3>
+        <button id="ph-btn-analyze" class="button ph-btn-analyze" aria-label="Confirmar posiciones y analizar cartera">
+          Analizar cartera <span aria-hidden="true">→</span>
+        </button>
+      </div>
+      <div id="ph-warnings" class="ph-warnings" role="alert" aria-live="polite"></div>
+      <div class="ph-table-wrap" role="region" aria-label="Tabla de posiciones" tabindex="0">
+        <table id="ph-positions-table" class="ph-table" aria-label="Posiciones de la cartera">
+          <thead>
+            <tr>
+              <th scope="col">Ticker</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Cantidad</th>
+              <th scope="col">Precio</th>
+              <th scope="col">Moneda</th>
+            </tr>
+          </thead>
+          <tbody id="ph-positions-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Reporte -->
+    <div id="ph-report-zone" class="ph-hidden" role="region" aria-label="Reporte de análisis">
+      <div class="ph-score-card">
+        <div class="ph-gauge-wrap" role="img" aria-labelledby="ph-score-label">
+          <svg id="ph-gauge-svg" class="ph-gauge" viewBox="0 0 200 120" aria-hidden="true">
+            <path d="M20,100 A80,80 0 0,1 180,100" fill="none" stroke="#2a3739" stroke-width="14" stroke-linecap="round"/>
+            <path id="ph-gauge-fill" d="M20,100 A80,80 0 0,1 180,100" fill="none" stroke="#9ae9c3" stroke-width="14" stroke-linecap="round" stroke-dasharray="251" stroke-dashoffset="251"/>
+            <text id="ph-gauge-val" x="100" y="88" text-anchor="middle" font-size="34" font-weight="600" fill="#ebefec">—</text>
+            <text x="100" y="108" text-anchor="middle" font-size="11" fill="#abb8b6">/ 100</text>
+          </svg>
+          <p id="ph-score-label" class="ph-score-label">Portfolio Health Score</p>
+        </div>
+        <div class="ph-score-dims" role="list" aria-label="Dimensiones del score">
+          <div class="ph-dim" role="listitem">
+            <span class="ph-dim-label">Diversificación</span>
+            <div class="ph-dim-bar-wrap"><div class="ph-dim-bar" id="ph-dim-div" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div></div>
+            <span class="ph-dim-val" id="ph-dim-div-val">—</span>
+          </div>
+          <div class="ph-dim" role="listitem">
+            <span class="ph-dim-label">Correlación</span>
+            <div class="ph-dim-bar-wrap"><div class="ph-dim-bar" id="ph-dim-cor" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div></div>
+            <span class="ph-dim-val" id="ph-dim-cor-val">—</span>
+          </div>
+          <div class="ph-dim" role="listitem">
+            <span class="ph-dim-label">Exposición FX</span>
+            <div class="ph-dim-bar-wrap"><div class="ph-dim-bar" id="ph-dim-fx" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div></div>
+            <span class="ph-dim-val" id="ph-dim-fx-val">—</span>
+          </div>
+          <div class="ph-dim" role="listitem">
+            <span class="ph-dim-label">Liquidez</span>
+            <div class="ph-dim-bar-wrap"><div class="ph-dim-bar" id="ph-dim-liq" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div></div>
+            <span class="ph-dim-val" id="ph-dim-liq-val">—</span>
+          </div>
+          <div class="ph-dim" role="listitem">
+            <span class="ph-dim-label">Volatilidad</span>
+            <div class="ph-dim-bar-wrap"><div class="ph-dim-bar" id="ph-dim-vol" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div></div>
+            <span class="ph-dim-val" id="ph-dim-vol-val">—</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ph-metrics-grid" role="list" aria-label="Métricas cuantitativas">
+        <div class="ph-metric" role="listitem">
+          <span class="ph-metric-label">Volatilidad anual</span>
+          <span class="ph-metric-val" id="ph-m-vol">—</span>
+        </div>
+        <div class="ph-metric" role="listitem">
+          <span class="ph-metric-label">Retorno esperado</span>
+          <span class="ph-metric-val" id="ph-m-ret">—</span>
+        </div>
+        <div class="ph-metric" role="listitem">
+          <span class="ph-metric-label">Sharpe Ratio</span>
+          <span class="ph-metric-val" id="ph-m-sharpe">—</span>
+        </div>
+        <div class="ph-metric" role="listitem">
+          <span class="ph-metric-label">Correlación promedio</span>
+          <span class="ph-metric-val" id="ph-m-corr">—</span>
+        </div>
+        <div class="ph-metric" role="listitem">
+          <span class="ph-metric-label">Par más correlacionado</span>
+          <span class="ph-metric-val ph-metric-val--sm" id="ph-m-pair">—</span>
+        </div>
+      </div>
+
+      <div class="ph-concentration" role="region" aria-label="Concentración sectorial">
+        <h3 class="ph-section-title">Concentración sectorial</h3>
+        <div id="ph-concentration-bars" class="ph-conc-list" role="list"></div>
+      </div>
+
+      <div class="ph-risks" role="region" aria-label="Riesgos detectados">
+        <h3 class="ph-section-title">Riesgos detectados</h3>
+        <ul id="ph-risks-list" class="ph-risks-list" aria-label="Lista de riesgos"></ul>
+      </div>
+
+      <div class="ph-narrative" role="region" aria-label="Análisis narrativo">
+        <h3 class="ph-section-title">Análisis</h3>
+        <div id="ph-narrative-text" class="ph-narrative-text" aria-live="polite" aria-atomic="false"></div>
+        <div id="ph-narrative-cursor" class="ph-cursor" aria-hidden="true"></div>
+      </div>
+
+      <div class="ph-restart-row">
+        <button id="ph-btn-restart" class="ph-btn-secondary">Analizar otra cartera</button>
+      </div>
+    </div>
+
+    <!-- Chat -->
+    <div id="ph-chat-zone" class="ph-hidden" role="region" aria-label="Chat de análisis">
+      <h3 class="ph-section-title">Hacé preguntas sobre tu cartera</h3>
+      <p class="ph-chat-hint">Por ejemplo: '¿Qué pasa si agrego NVDA?' · '¿Cuál es mi activo más volátil?' · '¿Cómo está mi exposición a renta fija?'</p>
+      <div id="ph-chat-messages" class="ph-chat-messages" role="log" aria-live="polite" aria-relevant="additions" aria-label="Historial del chat"></div>
+      <form id="ph-chat-form" class="ph-chat-form" aria-label="Formulario de chat">
+        <label for="ph-chat-input" class="ph-sr-only">Escribí tu pregunta</label>
+        <input type="text" id="ph-chat-input" class="ph-chat-input" placeholder="Escribí tu pregunta…" autocomplete="off" maxlength="500" aria-label="Pregunta sobre tu cartera">
+        <button type="submit" class="ph-chat-send" aria-label="Enviar pregunta">
+          <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 10L17 10M17 10L11 4M17 10L11 16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </form>
+    </div>
+
+    <!-- Loading -->
+    <div id="ph-loading" class="ph-loading ph-hidden" role="status" aria-live="polite">
+      <div class="ph-spinner" aria-hidden="true"></div>
+      <p id="ph-loading-msg">Procesando archivo…</p>
+    </div>
+
+  </main>
+
+  <footer class="wrap footer">
+    <span>Marcos Cordero Tenreyro</span>
+    <span>Buenos Aires, Argentina</span>
+    <a href="../">Volver al perfil ↑</a>
+  </footer>
+
+  <script src="../static/preferences.js?v=2" defer></script>
+  <script src="../static/portfolio.js"></script>
+</body>
+</html>
